@@ -1,0 +1,869 @@
+{
+  "$schema_version": "1.1",
+  "meta": {
+    "scope": "Yale School of Management, Evans Hall",
+    "last_updated": "2026-10-15",
+    "verification_status_definitions": {
+      "verified": "Confirmed against a cited, published Yale source that states the requirement. Safe to state as Yale guidance, with the citation.",
+      "observational": "Based on photographed signage or bin configuration observed in Evans Hall. Describes what is POSTED or what streams EXIST, not a confirmed processing requirement. Must be presented as observation, not policy. Where an observation conflicts with verified Yale-wide guidance, both must be surfaced and neither presented as settled.",
+      "unverified": "Not confirmed by a published Yale source for this situation. The assistant must express uncertainty and must not present this as Yale guidance."
+    },
+    "sources": {
+      "single_stream": "https://recycling.yale.edu/recycling-on-campus/single-stream-recycling",
+      "recycling_faq": "https://recycling.yale.edu/frequently-asked-questions",
+      "food_waste": "https://recycling.yale.edu/recycling-on-campus/food-waste",
+      "electronic_recycling": "https://recycling.yale.edu/recycling-on-campus/electronic-recycling",
+      "ehs_regulated_waste": "https://ehs.yale.edu/regulated-waste-faqs",
+      "ehs_alkaline": "https://ehs.yale.edu/i-have-regular-alkaline-batteries-can-i-just-throw-them-trash",
+      "recyclect_in_the_bin": "https://www.recyclect.com/en/in-the-bin/"
+    },
+    "editor_note": "Verified rules cite a Yale page that explicitly states the requirement. Yale-wide recycling rules are verified; Evans-Hall-specific collection practice is NOT, and stays unverified until confirmed with SOM building operations. A rule may carry conflicts_with / location_conflicts when posted local signage contradicts Yale-wide guidance; the assistant must then surface the discrepancy instead of resolving it.",
+    "resources": [
+      {
+        "label": "Yale Recycling — what goes in the bin",
+        "url": "https://recycling.yale.edu/recycling-on-campus/single-stream-recycling"
+      },
+      {
+        "label": "Yale Recycling — FAQ",
+        "url": "https://recycling.yale.edu/frequently-asked-questions"
+      },
+      {
+        "label": "Yale Recycling — food waste",
+        "url": "https://recycling.yale.edu/recycling-on-campus/food-waste"
+      },
+      {
+        "label": "Yale EHS — regulated waste",
+        "url": "https://ehs.yale.edu/regulated-waste-faqs"
+      },
+      {
+        "label": "RecycleCT — in the bin",
+        "url": "https://www.recyclect.com/en/in-the-bin/"
+      }
+    ]
+  },
+  "streams": {
+    "recycling": "Single-stream recycling",
+    "trash": "Landfill / trash",
+    "food_waste": "Food waste / compost collection",
+    "special": "Special handling (do not place in any Evans Hall station bin)",
+    "return_dishware": "Return to the dish / tray return (not a waste bin)"
+  },
+  "rules": [
+    {
+      "id": "evans-stations-inconsistent",
+      "item": "Evans Hall waste station signage",
+      "aliases": [
+        "signage",
+        "labels",
+        "bins",
+        "waste station",
+        "which bin",
+        "station"
+      ],
+      "category": "context",
+      "stream": null,
+      "verification_status": "observational",
+      "guidance": "Waste stations in Evans Hall are not labeled consistently. Some stations carry detailed stream signage and some carry minimal or no signage, so the bins in front of you may not match the bins elsewhere in the building. Read the lid openings and any posted label at your specific station before sorting.",
+      "source": {
+        "citation": "Photographic survey of Evans Hall waste stations conducted by the project author, 2026.",
+        "url": null,
+        "type": "project_observation"
+      },
+      "guide": {
+        "show": false,
+        "icon": "🪧",
+        "about_title": "Waste station signage varies across the building",
+        "about_body": "Stations around Evans Hall aren’t labelled consistently — some carry detailed stream signage, some have almost none, and the bins at one station may not match another. This comes from a photographic survey of the building, so it records what is posted, not what is collected. Read the lids and any label at your station before sorting."
+      }
+    },
+    {
+      "id": "evans-compost-availability",
+      "item": "Compost / food waste collection in Evans Hall",
+      "aliases": [
+        "compost",
+        "composting",
+        "food waste",
+        "food scraps",
+        "organics",
+        "green bin"
+      ],
+      "category": "food_waste",
+      "stream": null,
+      "verification_status": "unverified",
+      "guidance": "Yale states that its food waste program covers Yale College dining halls and Yale Hospitality retail spaces, and that the university 'currently does not have capacity to offer compost service to non-dining spaces.' Evans Hall is an academic building, so it is likely NOT served, but Yale's page does not name Evans Hall either way and this project has not confirmed it with SOM building operations. Do not tell a user that food waste collected at an Evans Hall station is composted. Say the Evans Hall situation is unconfirmed and point them to Yale Facilities / SOM building operations.",
+      "source": {
+        "citation": "Yale Recycling, 'Food Waste' — program covers dining halls and Yale Hospitality retail; states Yale does not currently have capacity to offer compost service to non-dining spaces. Evans Hall is not named, so its status remains unconfirmed for this project.",
+        "url": "https://recycling.yale.edu/recycling-on-campus/food-waste",
+        "type": "yale_official_partial"
+      },
+      "guide": {
+        "show": false,
+        "icon": "❓",
+        "about_title": "Open question: food-waste collection in Evans Hall",
+        "about_body": "Yale states its food-waste programme covers Yale College dining halls and Hospitality retail spaces, and that the university doesn’t currently have capacity to offer compost service to non-dining spaces. Evans Hall is an academic building and isn’t named either way, so its status is unresolved. Your SOM Sustainability Chairs are working to confirm the current guidelines."
+      }
+    },
+    {
+      "id": "plastic-bottle-empty",
+      "item": "Plastic beverage bottle",
+      "aliases": [
+        "water bottle",
+        "soda bottle",
+        "plastic bottle",
+        "pet bottle",
+        "drink bottle"
+      ],
+      "category": "containers",
+      "stream": "recycling",
+      "verification_status": "verified",
+      "guidance": "Yale single-stream recycling accepts plastic #1, and names beverage bottles as the example. Empty out any liquid first — Yale requires that items be clean and empty of liquids or food.",
+      "source": {
+        "citation": "Yale Recycling, 'Single-Stream Recycling' — accepts 'Plastic #1 (ex. beverage and salad dressing bottles)'; 'Items must be clean and empty of any liquids or food.'",
+        "url": "https://recycling.yale.edu/recycling-on-campus/single-stream-recycling",
+        "type": "yale_official"
+      },
+      "guide": {
+        "show": true,
+        "icon": "🥤",
+        "destination": "recycling",
+        "tip": "Empty it first",
+        "detail": "Yale single-stream accepts plastic #1, and names beverage bottles as the example. Tip the last of the drink out first — liquid contaminates the load."
+      }
+    },
+    {
+      "id": "plastic-cold-cup",
+      "item": "Clear plastic cold cup",
+      "aliases": [
+        "plastic cup",
+        "cold cup",
+        "iced coffee cup",
+        "smoothie cup",
+        "clear cup"
+      ],
+      "category": "foodservice",
+      "stream": "recycling",
+      "verification_status": "verified",
+      "guidance": "Yale single-stream accepts plastics by resin number: #1, #2 and #5. A clear plastic cold cup stamped #1, #2 or #5 is accepted if it is empty and clean. Check the number on the bottom — if it is another number or unmarked, it is not on Yale's accepted list. This is the opposite of a paper hot cup, which Yale lists as not recyclable.",
+      "source": {
+        "citation": "Yale Recycling, 'Single-Stream Recycling' — accepts Plastic #1, #2 and #5; 'Items must be clean and empty of any liquids or food.'",
+        "url": "https://recycling.yale.edu/recycling-on-campus/single-stream-recycling",
+        "type": "yale_official"
+      },
+      "guide": {
+        "show": true,
+        "icon": "🧋",
+        "destination": "recycling",
+        "tip": "Check for #1, #2 or #5",
+        "detail": "Yale accepts plastics by resin number. A clear cold cup with one of those numbers is fine once it’s empty and clean. If it’s unmarked or another number, it isn’t on the accepted list. Note this is the opposite of a paper hot cup."
+      }
+    },
+    {
+      "id": "aluminum-can",
+      "item": "Aluminum can",
+      "aliases": [
+        "soda can",
+        "beer can",
+        "seltzer can",
+        "aluminum can",
+        "aluminium can",
+        "tin can",
+        "metal can",
+        "drinks can",
+        "pop can"
+      ],
+      "category": "containers",
+      "stream": "recycling",
+      "verification_status": "verified",
+      "guidance": "Yale single-stream recycling accepts aluminum cans and metal cans and containers. Empty any liquid first.",
+      "source": {
+        "citation": "Yale Recycling, 'Single-Stream Recycling' — accepts 'Aluminum cans', 'Metal cans and containers'; 'Items must be clean and empty of any liquids or food.'",
+        "url": "https://recycling.yale.edu/recycling-on-campus/single-stream-recycling",
+        "type": "yale_official"
+      },
+      "guide": {
+        "show": true,
+        "icon": "🥫",
+        "destination": "recycling",
+        "tip": "Empty it first",
+        "detail": "Yale single-stream accepts aluminium cans and other metal cans and containers. Pour out anything left first."
+      }
+    },
+    {
+      "id": "coffee-cup-paper",
+      "item": "Paper hot coffee cup",
+      "aliases": [
+        "coffee cup",
+        "paper cup",
+        "to-go cup",
+        "hot cup",
+        "starbucks cup",
+        "dunkin cup"
+      ],
+      "category": "foodservice",
+      "stream": "trash",
+      "verification_status": "verified",
+      "guidance": "Yale lists 'Coffee cups, paper cups' and 'Food service paper' as NOT recyclable in single-stream. A paper hot cup goes in the trash. Note this is the cup only — a plastic cold cup marked #1, #2 or #5 is a different item and is recyclable.",
+      "source": {
+        "citation": "Yale Recycling, 'Single-Stream Recycling' — 'Coffee cups, paper cups' and 'Food service paper' listed under paper that is not accepted.",
+        "url": "https://recycling.yale.edu/recycling-on-campus/single-stream-recycling",
+        "type": "yale_official"
+      },
+      "guide": {
+        "show": true,
+        "icon": "☕",
+        "destination": "trash",
+        "tip": "Plastic-lined cups",
+        "detail": "Yale lists coffee cups and other paper cups as not accepted in single-stream recycling, along with food-service paper. The cup is usually plastic-lined, which is what makes it a problem."
+      }
+    },
+    {
+      "id": "cup-lid-plastic",
+      "item": "Plastic cup lid",
+      "aliases": [
+        "lid",
+        "coffee lid",
+        "plastic lid",
+        "dome lid"
+      ],
+      "category": "foodservice",
+      "stream": null,
+      "verification_status": "unverified",
+      "guidance": "Yale does not name plastic cup lids, and Connecticut's statewide RecycleCT list does not settle them either — it cuts both ways, so do NOT assume a lid follows the same rule as its cup. RecycleCT lists 'Plastic containers, tubs & lids' as accepted, which covers a tub or deli-container lid. But it lists plastic one-use cups as accepted only '(no lids, no straws)', which reads as the cup being accepted once the lid is off, not as the lid being accepted; and it puts 'Loose bottle caps' under WHAT'S OUT, so small loose closures are explicitly excluded. There is no entry anywhere for 'cup lids'. So: a rigid tub or container lid is on the accepted list, while a disposable drink-cup lid is genuinely unsettled. Your clarifying question for this item must be about the LID ITSELF — ask whether it is a rigid tub or container lid, or a disposable drink-cup lid. Do not ask about their location instead; where they are standing does not resolve this. If it is a drink-cup lid, say plainly that neither Yale nor RecycleCT resolves it, and do not guess a bin. Yale's own note that anything smaller than a credit card is likely to fall through the sorting machines is relevant context for small flat lids.",
+      "source": {
+        "citation": "RecycleCT, 'In the Bin' — WHAT'S IN includes 'Plastic containers, tubs & lids' and 'Plastic one-use cups (no lids, no straws)'; WHAT'S OUT includes 'Loose bottle caps'. No entry for cup lids anywhere, so disposable drink-cup lids are not resolved. Yale Recycling FAQ: multi-material items should be separated, and 'Anything smaller than a credit card likely won't get recycled.'",
+        "url": "https://www.recyclect.com/en/in-the-bin/",
+        "type": "state_official_ambiguous"
+      },
+      "guide": {
+        "show": true,
+        "icon": "🔘",
+        "destination": "depends",
+        "tip": "Tub lids yes, drink lids unclear",
+        "detail": "The statewide list accepts ‘plastic containers, tubs & lids’, but accepts one-use cups only ‘no lids, no straws’, and puts loose bottle caps under ‘what’s out’. There’s no entry for cup lids anywhere, so a disposable drink-cup lid genuinely isn’t resolved — we won’t guess."
+      }
+    },
+    {
+      "id": "pizza-box",
+      "item": "Pizza box",
+      "aliases": [
+        "pizza box",
+        "greasy cardboard",
+        "food-soiled cardboard"
+      ],
+      "category": "paper",
+      "stream": null,
+      "verification_status": "verified",
+      "guidance": "It depends on whether the box is soiled, so ask before answering. Yale says pizza boxes are not recyclable if they have residual grease or cheese on them — those go in the trash. A clean, grease-free box is cardboard, which Yale single-stream accepts. If part of the box is clean, tear off and recycle the clean cardboard and trash the greasy part.",
+      "source": {
+        "citation": "Yale Recycling FAQ — pizza boxes are not recyclable if they have 'residual grease or cheese on them'. Yale Recycling single-stream accepts 'Cardboard'.",
+        "url": "https://recycling.yale.edu/frequently-asked-questions",
+        "type": "yale_official"
+      },
+      "guide": {
+        "show": true,
+        "icon": "🍕",
+        "destination": "depends",
+        "tip": "Clean part recycles, greasy does not",
+        "detail": "Yale says pizza boxes aren’t recyclable once they have grease or cheese on them. If only part of the box is soiled, tear off the clean cardboard, recycle that, and bin the greasy half."
+      }
+    },
+    {
+      "id": "clean-paper",
+      "item": "Clean paper and printer paper",
+      "aliases": [
+        "printer paper",
+        "office paper",
+        "copy paper",
+        "scrap paper",
+        "notes",
+        "handout",
+        "syllabus",
+        "newspaper",
+        "magazine",
+        "envelope",
+        "cardboard",
+        "paperboard",
+        "note card"
+      ],
+      "category": "paper",
+      "stream": "recycling",
+      "verification_status": "verified",
+      "guidance": "Yale single-stream recycling accepts office paper, newspaper, magazines and catalogues, envelopes with or without windows, sticky notes, note cards, manila folders, cardboard and paperboard. It must be clean and dry. This rule covers CLEAN OFFICE-TYPE PAPER ONLY — it does NOT cover paper plates, paper cups, paper towels, napkins or tissues, each of which Yale lists separately as not accepted. If the item is food-service paper of any kind, do not apply this rule.",
+      "source": {
+        "citation": "Yale Recycling, 'Single-Stream Recycling' — accepts 'Office paper', 'Newspaper', 'Magazines, catalogs', 'Envelopes with or without windows', 'Sticky notes', 'Cardboard', 'Paperboard'; excludes 'Paper towels', 'Tissue paper', 'Food service paper'.",
+        "url": "https://recycling.yale.edu/recycling-on-campus/single-stream-recycling",
+        "type": "yale_official"
+      },
+      "guide": {
+        "show": true,
+        "icon": "📄",
+        "destination": "recycling",
+        "tip": "Clean and dry only",
+        "detail": "Office paper, newspaper, magazines, envelopes, sticky notes, cardboard and paperboard are all accepted. Paper towels, tissues and food-service paper are not."
+      },
+      "generic": true
+    },
+    {
+      "id": "paper-plate",
+      "item": "Disposable paper plate or bowl",
+      "aliases": [
+        "paper plate",
+        "paper bowl",
+        "paper plates",
+        "disposable plate",
+        "party plate",
+        "molded fiber plate",
+        "moulded fibre plate"
+      ],
+      "category": "foodservice",
+      "stream": "trash",
+      "verification_status": "verified",
+      "guidance": "Disposable paper plates and bowls go in the TRASH. Yale's accepted-paper list is specific — office paper, newspaper, magazines, envelopes, cardboard, paperboard — and plates are not on it; Yale separately lists 'Food service paper' as NOT recyclable, which is what a disposable plate is. Yale also requires recyclables to be clean and empty of food, so a used plate is out on that ground too. Do not route it with clean office paper. If the plate is labelled compostable, the answer is still trash — Yale states compostable plates are neither recyclable nor accepted in food waste. A plate that is plastic rather than paper is also trash under the statewide list.",
+      "source": {
+        "citation": "Yale Recycling, 'Single-Stream Recycling' — paper NOT accepted includes 'Food service paper', and the accepted-paper list does not include plates; 'Items must be clean and empty of any liquids or food.' Yale Recycling FAQ — 'Compostable utensils, plates, and cups are not made of recyclable material and should go into the trash.'",
+        "url": "https://recycling.yale.edu/recycling-on-campus/single-stream-recycling",
+        "type": "yale_official"
+      },
+      "guide": {
+        "show": true,
+        "icon": "🍽️",
+        "destination": "trash",
+        "tip": "Food-service paper, not office paper",
+        "detail": "Yale's accepted-paper list covers office paper, newspaper, magazines, envelopes and cardboard — plates aren't on it, and Yale lists food-service paper as not recyclable. A used plate also fails the clean-and-empty rule. Compostable-labelled plates go in the trash too."
+      }
+    },
+    {
+      "id": "paper-towel",
+      "item": "Paper towel, napkin, or tissue",
+      "aliases": [
+        "paper towel",
+        "paper towels",
+        "napkin",
+        "napkins",
+        "tissue",
+        "tissues",
+        "kleenex",
+        "serviette",
+        "hand towel"
+      ],
+      "category": "paper",
+      "stream": "trash",
+      "verification_status": "verified",
+      "guidance": "Paper towels, napkins and tissues go in the TRASH. Yale lists 'Paper towels' and 'Tissue paper' explicitly among the paper items that are NOT accepted in single-stream recycling. This holds whether or not they look clean. Do not route them with clean office paper.",
+      "source": {
+        "citation": "Yale Recycling, 'Single-Stream Recycling' — paper NOT accepted includes 'Paper towels' and 'Tissue paper'. RecycleCT's statewide list also puts 'Tissue paper' under WHAT'S OUT.",
+        "url": "https://recycling.yale.edu/recycling-on-campus/single-stream-recycling",
+        "type": "yale_official"
+      },
+      "guide": {
+        "show": true,
+        "icon": "🧻",
+        "destination": "trash",
+        "tip": "Never recyclable, even when clean",
+        "detail": "Yale names paper towels and tissue paper among the paper items it does not accept in single-stream recycling, regardless of how clean they look."
+      }
+    },
+    {
+      "id": "food-scraps",
+      "item": "Leftover food / food scraps",
+      "aliases": [
+        "food",
+        "food scraps",
+        "leftovers",
+        "leftover food",
+        "half-eaten",
+        "half eaten",
+        "crumbs",
+        "banana peel",
+        "banana",
+        "apple core",
+        "apple",
+        "orange peel",
+        "fruit",
+        "vegetable",
+        "veggies",
+        "salad",
+        "sandwich",
+        "wrap",
+        "burrito",
+        "pizza crust",
+        "crust",
+        "bread",
+        "toast",
+        "bagel",
+        "croissant",
+        "pastry",
+        "scone",
+        "cookie",
+        "biscuit",
+        "muffin",
+        "cake",
+        "brownie",
+        "donut",
+        "doughnut",
+        "baked item",
+        "baked goods",
+        "baked food",
+        "rice",
+        "pasta",
+        "noodles",
+        "meat",
+        "chicken",
+        "bones",
+        "eggshell",
+        "egg shell",
+        "coffee grounds",
+        "tea bag",
+        "snack",
+        "cereal"
+      ],
+      "category": "food_waste",
+      "stream": null,
+      "verification_status": "unverified",
+      "guidance": "Yale does run a food waste program — it accepts produce, bones, bread, dairy, coffee grounds and filters, eggshells, meat, nuts and tea bags, and sends them to an anaerobic digestion facility in Southington, Connecticut. But Yale states that program covers dining halls and Yale Hospitality retail spaces, and that it does not currently have capacity to serve non-dining spaces, and Evans Hall is not named either way. ALWAYS MENTION THIS, wherever in Evans Hall the student is: the one food-scraps and compostables bin documented in this building is at Charley's Place, near the tray return, and its photographed sign explicitly includes leftover food. Tell them where it is. Be careful on two points: most Evans Hall waste stations do NOT have a food-scraps bin, so never imply every station has one; and this project has not verified the current collection or processing behind that bin, so describe what the sign says and where the bin is, never what happens to the material afterwards. Do not claim scraps are composted, and do not fall back to telling them to use the trash instead — that stream is not confirmed for this item here.",
+      "source": {
+        "citation": "Yale Recycling, 'Food Waste' — accepted materials and anaerobic digestion destination; program covers Yale College dining halls and Yale Hospitality retail spaces; Yale 'currently does not have capacity to offer compost service to non-dining spaces.' Evans Hall is not named.",
+        "url": "https://recycling.yale.edu/recycling-on-campus/food-waste",
+        "type": "yale_official_partial"
+      },
+      "guide": {
+        "show": true,
+        "icon": "🍌",
+        "destination": "food_waste",
+        "tip": "Charley’s Place signage",
+        "detail": "Yale runs a food-waste programme that accepts produce, bread, dairy, coffee grounds, eggshells, meat and tea bags, and sends it to an anaerobic digestion facility in Southington. That programme covers dining halls and Hospitality retail spaces, and Yale says it doesn’t currently have capacity for non-dining spaces. Evans Hall isn’t named either way, so what happens to material in that bin is still being confirmed — and most stations in the building don’t have one."
+      },
+      "observed_action": {
+        "destination": "food_waste",
+        "place": "Charley’s Place",
+        "instruction": "Find the food-scraps bin near the tray return.",
+        "caveat": "Based on posted signage; collection details are still being verified."
+      }
+    },
+    {
+      "id": "charleys-food-scraps-bin",
+      "item": "Charley's Place food-scraps bin (near the tray return)",
+      "aliases": [
+        "charley's place",
+        "charleys place",
+        "charley's",
+        "charleys",
+        "charley",
+        "tray return",
+        "food scraps bin",
+        "compost bin",
+        "the cafe",
+        "cafe"
+      ],
+      "category": "food_waste",
+      "location_scope": "Charley's Place, Evans Hall",
+      "stream": null,
+      "verification_status": "observational",
+      "guidance": "Photographed signage at Charley's Place in Evans Hall shows a food-scraps and compostables bin near the tray return, and its sign explicitly lists leftover food as accepted. Tell the student that this bin exists and where it is, and that its sign includes leftover food — that is a real, useful observation. But be clear that this project has NOT independently verified the current collection or processing arrangements behind that bin, so do not state as fact that material placed there is composted. Describe the sign, not the outcome.",
+      "source": {
+        "citation": "Photographic survey of Charley's Place signage, Evans Hall, conducted by the project author, 2026. Records a food-scraps/compostables bin near the tray return whose posted sign includes leftover food. Observational only — posted signage, not verified collection or processing.",
+        "url": null,
+        "type": "project_observation"
+      },
+      "guide": {
+        "show": false,
+        "icon": "🍃",
+        "about_title": "Food-scraps bin at Charley’s Place",
+        "about_body": "A food-scraps and compostables bin is posted near the tray return at Charley’s Place, and its sign explicitly includes leftover food. We know where it is and what the sign says; we have not independently confirmed the collection or processing behind it, so we don’t claim material placed there is composted."
+      },
+      "observed_action": {
+        "destination": "food_waste",
+        "place": "Charley’s Place",
+        "instruction": "Find the food-scraps bin near the tray return.",
+        "caveat": "Based on posted signage; collection details are still being verified."
+      }
+    },
+    {
+      "id": "compostable-serviceware",
+      "item": "Compostable-labeled cup, utensil, or container",
+      "aliases": [
+        "compostable",
+        "pla",
+        "bioplastic",
+        "compostable fork",
+        "compostable cup",
+        "green utensil",
+        "compostable utensil"
+      ],
+      "requires_any": [
+        "compostable",
+        "compostables",
+        "pla",
+        "bioplastic",
+        "green utensil"
+      ],
+      "category": "foodservice",
+      "stream": "trash",
+      "verification_status": "verified",
+      "guidance": "Yale is explicit about this one: compostable utensils, plates and cups are not made of recyclable material and should go in the trash, and Yale's food waste program lists them as unacceptable too. So despite the 'compostable' label, they go in the trash at Yale — they belong in neither the recycling bin nor a food waste bin.",
+      "source": {
+        "citation": "Yale Recycling FAQ — 'Compostable utensils, plates, and cups are not made of recyclable material and should go into the trash', and do not belong in food waste bins. Yale Recycling 'Food Waste' lists 'Compostable utensils, plates, cups' as unacceptable.",
+        "url": "https://recycling.yale.edu/frequently-asked-questions",
+        "type": "yale_official"
+      },
+      "location_conflicts": [
+        "charleys-compostable-signage"
+      ],
+      "guide": {
+        "show": true,
+        "icon": "🌱",
+        "destination": "trash",
+        "tip": "Despite the label",
+        "detail": "Yale is explicit: compostable utensils, plates and cups aren’t made of recyclable material and belong in the trash, and Yale’s food-waste programme lists them as unacceptable too. The ‘compostable’ label doesn’t change that here."
+      }
+    },
+    {
+      "id": "charleys-compostable-signage",
+      "item": "Charley's Place signage — compostable serviceware",
+      "aliases": [
+        "charley's place",
+        "charleys place",
+        "charley's",
+        "charleys",
+        "charley",
+        "cafe signage",
+        "the cafe",
+        "coffee shop"
+      ],
+      "category": "foodservice",
+      "location_scope": "Charley's Place, Evans Hall",
+      "stream": null,
+      "verification_status": "observational",
+      "conflicts_with": [
+        "compostable-serviceware"
+      ],
+      "guidance": "Photographed signage at Charley's Place in Evans Hall lists compostable serviceware as accepted in its collection. This is an observation of what is POSTED at that location — it is not confirmation of what is actually collected or how it is processed, and it conflicts with Yale's published university-wide guidance that compostable serviceware goes in the trash. Tell the user both things are true at once: the sign says one thing, Yale's published rule says another, and the project has not confirmed which governs actual collection at that station. Point them to Yale Facilities / SOM building operations. Do not pick a winner.",
+      "source": {
+        "citation": "Photographic survey of Charley's Place signage, Evans Hall, conducted by the project author, 2026. Observational only — records posted signage, not verified collection or processing practice.",
+        "url": null,
+        "type": "project_observation"
+      },
+      "guide": {
+        "show": false,
+        "icon": "⚠️",
+        "about_title": "Conflicting guidance on compostable serviceware",
+        "about_body": "The sign at Charley’s Place lists compostable serviceware as accepted, while Yale’s published university-wide guidance says compostable cups, plates and utensils belong in the trash. Both are true at once: that’s what the sign says, and that’s what Yale publishes. Which governs actual collection at that station hasn’t been confirmed."
+      }
+    },
+    {
+      "id": "utensils-conventional-plastic",
+      "item": "Conventional plastic fork, knife, spoon, plate or bowl",
+      "aliases": [
+        "plastic fork",
+        "plastic spoon",
+        "plastic knife",
+        "plastic utensil",
+        "cutlery",
+        "silverware",
+        "plastic plate",
+        "plastic bowl",
+        "plastic plates"
+      ],
+      "disqualifiers": [
+        "compostable",
+        "compostables",
+        "pla",
+        "bioplastic",
+        "metal",
+        "stainless",
+        "silverware",
+        "reusable",
+        "ceramic"
+      ],
+      "category": "foodservice",
+      "stream": "trash",
+      "verification_status": "verified",
+      "guidance": "Put disposable plastic forks, spoons and knives in the TRASH. This is a settled answer — give it directly. Connecticut's statewide recyclables list, the RecycleCT list that Yale's own Recycling FAQ directs people to for items it does not name, puts 'Plastic plates, bowls & utensils' explicitly under WHAT'S OUT. Yale's single-stream guidance points the same way: it accepts plastics as containers by resin number (#1, #2, #5), and notes anything smaller than a credit card is likely to fall through the sorting machines. Note the contrast with cups: RecycleCT accepts plastic one-use cups, but not utensils. Scope note, which does NOT change the answer: this establishes general recycling eligibility. This project has not verified Evans-Hall-specific handling, and station signage is inconsistent, so the student may need to look for the trash opening at their station — but the stream itself is trash either way, so do not withhold the recommendation over that.",
+      "source": {
+        "citation": "RecycleCT, 'In the Bin' — statewide WHAT'S OUT list includes 'Plastic plates, bowls & utensils' (WHAT'S IN includes 'Plastic one-use cups (no lids, no straws)'). Yale Recycling FAQ directs users to the RecycleCT Wizard for items not listed, and notes 'Anything smaller than a credit card likely won't get recycled.'",
+        "url": "https://www.recyclect.com/en/in-the-bin/",
+        "type": "state_official"
+      },
+      "guide": {
+        "show": true,
+        "icon": "🍴",
+        "destination": "trash",
+        "tip": "Disposable utensil",
+        "detail": "Connecticut’s statewide recyclables list — which Yale’s own FAQ points to for items it doesn’t name — puts plastic plates, bowls and utensils under ‘what’s out’. Worth knowing: plastic one-use cups are accepted, but utensils aren’t."
+      }
+    },
+    {
+      "id": "reusable-dishware",
+      "item": "Reusable plate, bowl, mug, or metal cutlery",
+      "aliases": [
+        "ceramic plate",
+        "reusable plate",
+        "real plate",
+        "dinner plate",
+        "plate",
+        "bowl",
+        "ceramic bowl",
+        "mug",
+        "ceramic mug",
+        "metal fork",
+        "metal spoon",
+        "silverware",
+        "reusable cutlery",
+        "dish",
+        "dishes",
+        "tray"
+      ],
+      "disqualifiers": [
+        "disposable",
+        "single-use",
+        "single use",
+        "compostable",
+        "compostables",
+        "plastic fork",
+        "plastic spoon",
+        "plastic knife",
+        "plastic utensil",
+        "plastic cutlery",
+        "paper plate"
+      ],
+      "category": "dishware",
+      "stream": "return_dishware",
+      "verification_status": "observational",
+      "guidance": "Reusable dining ware — ceramic plates and bowls, mugs, and metal cutlery — is not waste and does not belong in any bin. Return it to the dish/tray return. Photographed signage in Evans Hall shows a tray return at Charley's Place. No published Yale policy stating a dish-return requirement was found for this project, so present this as the observed arrangement and as obvious handling for non-disposable items, NOT as cited Yale policy. DO NOT ask whether a ceramic plate or bowl, a mug, or metal cutlery is reusable — those materials are reusable by definition, so just answer. DO ask first in only two situations: the material is genuinely unclear from the description or photo (it could be a disposable paper or moulded-fibre look-alike), or the item is broken or chipped. Broken ceramic is a cut hazard and is not something to hand back at a tray return, and Yale's recycling guidance separately lists 'Plates, ceramics' as NOT accepted in single-stream recycling, so a broken ceramic plate is not a recycling item either.",
+      "source": {
+        "citation": "Photographic survey of Evans Hall, including the tray return at Charley's Place, conducted by the project author, 2026. Observational only — no published Yale dish-return policy was located. Related verified fact: Yale Recycling single-stream excludes 'Plates, ceramics'.",
+        "url": null,
+        "type": "project_observation"
+      },
+      "guide": {
+        "show": true,
+        "icon": "🍽️",
+        "destination": "return_dishware",
+        "tip": "Take it to the tray return",
+        "detail": "Ceramic plates and bowls, mugs and metal cutlery are reusable, so they don’t belong in any bin. A tray return is posted at Charley’s Place. If something is broken or chipped, don’t hand it back at the tray return — broken ceramic is a cut hazard, and it isn’t recyclable either."
+      }
+    },
+    {
+      "id": "small-items",
+      "item": "Very small items (smaller than a credit card)",
+      "aliases": [
+        "smaller than a credit card",
+        "small loose item",
+        "bottle cap",
+        "straw",
+        "tiny piece"
+      ],
+      "category": "context",
+      "stream": "trash",
+      "verification_status": "verified",
+      "guidance": "Yale notes that anything smaller than a credit card likely will not get recycled, because it falls through the sorting machines at the material recovery facility. Small loose items are better off in the trash than contaminating the recycling stream.",
+      "source": {
+        "citation": "Yale Recycling FAQ — 'Anything smaller than a credit card likely won't get recycled' because such items fall through the sorting machines at the material recovery facility.",
+        "url": "https://recycling.yale.edu/frequently-asked-questions",
+        "type": "yale_official"
+      },
+      "guide": {
+        "show": true,
+        "icon": "🔹",
+        "destination": "trash",
+        "tip": "Smaller than a credit card",
+        "detail": "Yale notes that very small items slip through the machinery at the sorting facility, so they don’t get recycled even when the material would otherwise qualify."
+      },
+      "disqualifiers": [
+        "food",
+        "scone",
+        "cookie",
+        "banana",
+        "fruit",
+        "leftover",
+        "pastry",
+        "muffin"
+      ]
+    },
+    {
+      "id": "plastic-film-bags",
+      "item": "Plastic bag, film or flexible packaging",
+      "aliases": [
+        "plastic bag",
+        "ziploc",
+        "film",
+        "plastic film",
+        "cling film",
+        "cellophane",
+        "wrapper",
+        "wrapping",
+        "chip bag",
+        "crisp packet",
+        "candy wrapper",
+        "snack wrapper",
+        "sweet wrapper",
+        "snack bag",
+        "shrink wrap",
+        "bubble wrap",
+        "plastic wrap",
+        "plastic sleeve",
+        "film sleeve",
+        "plastic pouch",
+        "pouch",
+        "sachet",
+        "packet",
+        "soft plastic",
+        "flexible plastic",
+        "clear plastic bag",
+        "plastic packaging",
+        "packaging",
+        "plastic covering"
+      ],
+      "category": "plastics",
+      "stream": "trash",
+      "verification_status": "verified",
+      "conditional": true,
+      "guidance": "Plastic bags, film, wrappers, bubble wrap and packing peanuts go in the TRASH. Yale single-stream does not accept them — they tangle the sorting equipment. Yale notes plastic bags can go to a grocery-store drop-off instead if the student wants to keep them out of landfill. DO NOT ASK FOR A RESIN NUMBER: resin codes are moulded into rigid containers, not into flexible film, so a wrapper will never have a usable one and waiting for it just blocks a settled answer. FLEXIBILITY DECIDES THIS RULE, AND THE PHOTO OBSERVATION REPORTS IT. Use the 'packaging form' line, which the vision pass judged from the image — you cannot see the photo yourself, so do not try to infer flexibility from the wording of the label. - form = flexible_film: that is your evidence. Answer TRASH. Say 'confirmed' when the material is plastic and certain; say 'likely' when the material is not certain, and you may offer a clarification about the material alongside that answer. - form = rigid: this rule does NOT apply. A rigid plastic container is judged by its resin number and may be accepted. Do not answer trash from this rule. - form = unknown: ask whether it is flexible film, like a wrapper or bag, or a rigid container, before giving a stream. Do not guess. For a TYPED question with no photo there is no form line; treat words such as wrapper, bag, film, pouch, sachet, packet, cellophane or cling film as establishing flexible packaging, and ask when only the word 'packaging' is given. ONE EXCEPTION: if the student says they cannot tell what the wrapper is made of, do not answer trash as though it were settled — a wrapper can be paper or foil-lined, which is a different question. Ask whether it is plastic film, paper or foil.",
+      "source": {
+        "citation": "Yale Recycling, 'Single-Stream Recycling' — 'Plastic bags', 'Film plastics', 'Bubble wrap', 'Packing peanuts' listed as not accepted. Yale Recycling FAQ notes plastic bags can be taken to a local grocery store.",
+        "url": "https://recycling.yale.edu/recycling-on-campus/single-stream-recycling",
+        "type": "yale_official"
+      },
+      "guide": {
+        "show": true,
+        "icon": "🛍️",
+        "destination": "trash",
+        "tip": "Bags, film, wrappers — never recycling",
+        "detail": "Plastic bags, film, wrappers, bubble wrap and packing peanuts are all excluded from Yale single-stream recycling — they tangle the sorting equipment. Plastic bags can go to a grocery-store drop-off instead. Rigid plastic containers are a different question: those are judged by their resin number."
+      },
+      "disqualifiers": [
+        "paper wrapper",
+        "paper bag",
+        "foil wrapper",
+        "foil packaging",
+        "aluminum foil",
+        "rigid",
+        "hard plastic",
+        "rigid container",
+        "plastic container",
+        "food container",
+        "takeout container",
+        "take-out container",
+        "take out container",
+        "clamshell",
+        "tub",
+        "bottle",
+        "jar",
+        "cup",
+        "tray",
+        "carton"
+      ]
+    },
+    {
+      "id": "batteries",
+      "item": "Batteries",
+      "aliases": [
+        "battery",
+        "aa battery",
+        "lithium battery",
+        "rechargeable",
+        "button battery"
+      ],
+      "category": "hazardous",
+      "stream": "special",
+      "verification_status": "verified",
+      "guidance": "Batteries never go in single-stream recycling — Yale lists them as not accepted and flags them as a fire hazard. The type matters, so ask which it is. Yale EHS says ordinary alkaline batteries no longer contain mercury and can go in the normal trash. Lithium, lead acid, rechargeable and button batteries are universal waste and cannot go in the general trash — they need EHS collection, with the ends taped or each battery bagged individually. EHS Waste Line: 203-432-6545, waste.requests@yale.edu.",
+      "source": {
+        "citation": "Yale EHS Regulated Waste FAQs — lithium, lead acid, rechargeable and button batteries are universal waste, not for general trash, ends taped or individually bagged; batteries cannot go in single-stream (fire hazard). Yale EHS — alkaline batteries no longer contain mercury and can be disposed of in normal trash. Yale Recycling single-stream lists 'Batteries, e-waste' as not accepted.",
+        "url": "https://ehs.yale.edu/regulated-waste-faqs",
+        "type": "yale_official"
+      },
+      "guide": {
+        "show": true,
+        "icon": "🔋",
+        "destination": "special",
+        "tip": "Never in a bin",
+        "detail": "Batteries are a fire hazard in recycling and are excluded from single-stream. Yale EHS says ordinary alkaline batteries can go in normal trash. Lithium, lead-acid, rechargeable and button batteries are universal waste: tape the ends or bag them individually and request an EHS pickup. EHS Waste Line: 203-432-6545."
+      }
+    },
+    {
+      "id": "electronics",
+      "item": "Electronics and e-waste",
+      "aliases": [
+        "laptop",
+        "charger",
+        "cable",
+        "phone",
+        "electronics",
+        "e-waste",
+        "headphones",
+        "monitor",
+        "keyboard"
+      ],
+      "category": "hazardous",
+      "stream": "special",
+      "verification_status": "verified",
+      "guidance": "Electronics are universal waste at Yale and are handled by Environmental Health & Safety, not by station bins — Yale single-stream explicitly excludes e-waste. Covered items include computers, monitors, keyboards, mice, scanners, printers, radios, televisions, telephones and cell phones. Submit an EHS pick-up request under the 'Universal Waste' category; batteries use a separate process. Clear your data off the device first. EHS Waste Line: 203-432-6545, waste.requests@yale.edu.",
+      "source": {
+        "citation": "Yale Recycling, 'Electronic Recycling' and Yale EHS Regulated Waste FAQs — electronics are universal waste handled via EHS pick-up request under 'Universal Waste'; covered item list; Yale-purchased equipment must be disposed of through EHS. Yale single-stream lists 'Batteries, e-waste' as not accepted.",
+        "url": "https://recycling.yale.edu/recycling-on-campus/electronic-recycling",
+        "type": "yale_official"
+      },
+      "guide": {
+        "show": true,
+        "icon": "🔌",
+        "destination": "special",
+        "tip": "Through Yale EHS",
+        "detail": "Computers, monitors, keyboards, mice, printers, phones and similar devices are universal waste handled by Environmental Health & Safety. Submit a pickup request under ‘Universal Waste’, and clear your data off the device first. EHS Waste Line: 203-432-6545."
+      }
+    },
+    {
+      "id": "liquids",
+      "item": "Leftover liquid in a cup or bottle",
+      "aliases": [
+        "liquid",
+        "coffee left",
+        "drink",
+        "leftover drink",
+        "water left"
+      ],
+      "category": "context",
+      "stream": null,
+      "verification_status": "verified",
+      "guidance": "Yale requires that recyclables be clean and empty of any liquids or food, and names food residue as a contaminant. Pour the liquid out before binning the container. Whether a specific Evans Hall station has somewhere to pour liquid is not something this project has confirmed.",
+      "source": {
+        "citation": "Yale Recycling, 'Single-Stream Recycling' — 'Items must be clean and empty of any liquids or food.' Yale Recycling FAQ — items can be recycled if 'they are empty and clean'; food residue is a contaminant.",
+        "url": "https://recycling.yale.edu/recycling-on-campus/single-stream-recycling",
+        "type": "yale_official"
+      },
+      "guide": {
+        "show": true,
+        "icon": "💧",
+        "destination": "depends",
+        "tip": "Pour it out first",
+        "detail": "Yale requires recyclables to be empty and clean — leftover liquid contaminates paper and the rest of the load. Whether your particular station has somewhere to pour it out isn’t something we’ve confirmed."
+      }
+    },
+    {
+      "id": "glass",
+      "item": "Glass bottle or jar",
+      "aliases": [
+        "glass",
+        "glass bottle",
+        "jar",
+        "mason jar"
+      ],
+      "category": "containers",
+      "stream": "recycling",
+      "verification_status": "verified",
+      "guidance": "Yale single-stream recycling accepts glass bottles and jars and all colored glass, as long as they are empty and clean. Separate a metal cap from a glass jar — multi-material items must be separated. Not accepted: light bulbs, mirrors, plates and ceramics, Pyrex, and window glass.",
+      "source": {
+        "citation": "Yale Recycling, 'Single-Stream Recycling' — accepts 'All colored glass', 'Glass bottles and jars'; excludes 'Light bulbs', 'Mirrors', 'Plates, ceramics', 'Pyrex glass', 'Window glass'; multi-material items 'must be separated before going in the bin.'",
+        "url": "https://recycling.yale.edu/recycling-on-campus/single-stream-recycling",
+        "type": "yale_official"
+      },
+      "guide": {
+        "show": true,
+        "icon": "🫙",
+        "destination": "recycling",
+        "tip": "Empty, rinse, lid off",
+        "detail": "Glass bottles and jars of any colour are accepted. Separate a metal cap from the jar — mixed-material items have to be split up. Not accepted: light bulbs, mirrors, ceramics, Pyrex or window glass."
+      }
+    }
+  ]
+}

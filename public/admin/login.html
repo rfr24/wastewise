@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex, nofollow" />
+<title>WasteWise Operations — Sign in</title>
+<link rel="stylesheet" href="/admin/admin.css" />
+</head>
+<body class="login-body">
+  <main class="login-card">
+    <img class="login-logo" src="/logo.png" alt="" width="192" height="192" />
+    <h1>WasteWise Operations</h1>
+    <p class="login-sub">Sustainability dashboard · Yale SOM</p>
+    <form id="login-form">
+      <label for="password">Admin password</label>
+      <input type="password" id="password" name="password" autocomplete="current-password" required />
+      <button type="submit" id="login-btn">Sign in</button>
+      <p id="login-error" class="login-error" role="alert" hidden></p>
+    </form>
+    <p class="login-note">
+      This area shows aggregate question data and anonymous feedback. It is separate
+      from the student assistant and is not linked from it.
+    </p>
+  </main>
+  <script src="/admin/login.js"></script>
+</body>
+</html>

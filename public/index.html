@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#0f4d3a" />
+<title>WasteWise — Know before you throw</title>
+<link rel="stylesheet" href="styles.css" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23faf7f1'/><circle cx='16' cy='14' r='13' fill='%230f4d3a'/><path d='M10 24 4.5 31 18 26Z' fill='%230f4d3a'/><g transform='translate(-4.4 -6.4) scale(1.7)'><g><path d='M7.35 13.66 9.56 9.82' fill='none' stroke='%23b7e0c9' stroke-width='2.45' stroke-linecap='round'/><path d='M11.34 6.75 11.29 10.82 7.83 8.82Z' fill='%23b7e0c9'/></g><g transform='rotate(120 12 12)'><path d='M7.35 13.66 9.56 9.82' fill='none' stroke='%23b7e0c9' stroke-width='2.45' stroke-linecap='round'/><path d='M11.34 6.75 11.29 10.82 7.83 8.82Z' fill='%23b7e0c9'/></g><g transform='rotate(240 12 12)'><path d='M7.35 13.66 9.56 9.82' fill='none' stroke='%23b7e0c9' stroke-width='2.45' stroke-linecap='round'/><path d='M11.34 6.75 11.29 10.82 7.83 8.82Z' fill='%23b7e0c9'/></g></g></svg>" />
+</head>
+<body>
+
+<!-- Inline icon sprite: one original set, recoloured by CSS currentColor. -->
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <symbol id="i-recycle-mark" viewBox="0 0 24 24">
+      <g>
+        <path d="M7.35 13.66 9.56 9.82" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/>
+        <path d="M11.34 6.75 11.29 10.82 7.83 8.82Z" fill="currentColor"/>
+      </g>
+      <g transform="rotate(120 12 12)">
+        <path d="M7.35 13.66 9.56 9.82" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/>
+        <path d="M11.34 6.75 11.29 10.82 7.83 8.82Z" fill="currentColor"/>
+      </g>
+      <g transform="rotate(240 12 12)">
+        <path d="M7.35 13.66 9.56 9.82" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/>
+        <path d="M11.34 6.75 11.29 10.82 7.83 8.82Z" fill="currentColor"/>
+      </g>
+  </symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24">
+    <path d="M21 12a8 8 0 0 1-8 8 8.5 8.5 0 0 1-2.9-.5L5 21l1.4-4.2A8 8 0 1 1 21 12Z"
+          fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+  </symbol>
+  <symbol id="i-camera" viewBox="0 0 24 24">
+    <path d="M3 8.5A1.5 1.5 0 0 1 4.5 7h2.2l1.2-2h8.2l1.2 2h2.2A1.5 1.5 0 0 1 21 8.5v9A1.5 1.5 0 0 1 19.5 19h-15A1.5 1.5 0 0 1 3 17.5v-9Z"
+          fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+    <circle cx="12" cy="13" r="3.4" fill="none" stroke="currentColor" stroke-width="1.8"/>
+  </symbol>
+  <symbol id="i-recycle" viewBox="0 0 24 24">
+      <g>
+        <path d="M7.35 13.66 9.56 9.82" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/>
+        <path d="M11.34 6.75 11.29 10.82 7.83 8.82Z" fill="currentColor"/>
+      </g>
+      <g transform="rotate(120 12 12)">
+        <path d="M7.35 13.66 9.56 9.82" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/>
+        <path d="M11.34 6.75 11.29 10.82 7.83 8.82Z" fill="currentColor"/>
+      </g>
+      <g transform="rotate(240 12 12)">
+        <path d="M7.35 13.66 9.56 9.82" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/>
+        <path d="M11.34 6.75 11.29 10.82 7.83 8.82Z" fill="currentColor"/>
+      </g>
+  </symbol>
+  <symbol id="i-apple-core" viewBox="0 0 24 24">
+    <!-- Outlined to match the other icons: apple body with a bite scalloped out
+         of each side, a notch between the bottom lobes, and a leafed stem. -->
+    <path d="M12 9.2C13.15 7.63 14.54 7.18 15.69 7.52C17 7.97 17.9 9.65 17.82 11.89C15.69 14.13 15.69 16.59 17.25 18.72C17.41 20.62 15.94 22.08 14.3 22.08C13.31 22.08 12.57 21.41 12 20.85C11.43 21.41 10.69 22.08 9.7 22.08C8.06 22.08 6.59 20.62 6.75 18.72C8.31 16.59 8.31 14.13 6.18 11.89C6.1 9.65 7 7.97 8.31 7.52C9.46 7.18 10.85 7.63 12 9.2Z"
+          fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+    <path d="M12 9.2C12.16 6.74 11.92 4.94 12.57 3.15" fill="none" stroke="currentColor"
+          stroke-width="1.7" stroke-linecap="round"/>
+    <path d="M12.74 4.72C13.97 2.26 15.94 1.7 16.67 2.37C16.92 4.05 15.2 6.18 12.74 4.72Z"
+          fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+  </symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24">
+    <path d="M4.5 7h15M9.5 7V5.2A1.2 1.2 0 0 1 10.7 4h2.6a1.2 1.2 0 0 1 1.2 1.2V7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    <path d="M6.3 7h11.4l-.9 11.6A1.5 1.5 0 0 1 15.3 20H8.7a1.5 1.5 0 0 1-1.5-1.4L6.3 7Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+    <path d="M10.3 10.5v6M13.7 10.5v6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="i-dish" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="8.2" fill="none" stroke="currentColor" stroke-width="1.8"/>
+    <circle cx="12" cy="12" r="4.3" fill="none" stroke="currentColor" stroke-width="1.6"/>
+  </symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24">
+    <path d="M12 3.8 21 19.5H3L12 3.8Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+    <path d="M12 9.6v4.2" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+    <circle cx="12" cy="16.6" r="1.1" fill="currentColor"/>
+  </symbol>
+  <symbol id="i-info" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="8.6" fill="none" stroke="currentColor" stroke-width="1.8"/>
+    <path d="M12 11.2v5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+    <circle cx="12" cy="7.9" r="1.05" fill="currentColor"/>
+  </symbol>
+  <symbol id="i-chevron" viewBox="0 0 24 24">
+    <path d="m9.5 5.5 7 6.5-7 6.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+  <symbol id="i-question" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="8.6" fill="none" stroke="currentColor" stroke-width="1.8"/>
+    <path d="M9.7 9.6a2.4 2.4 0 1 1 3.2 2.3c-.6.3-.9.8-.9 1.4v.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    <circle cx="12" cy="16.6" r="1.05" fill="currentColor"/>
+  </symbol>
+  <symbol id="i-image" viewBox="0 0 24 24">
+    <rect x="3.2" y="5.2" width="17.6" height="13.6" rx="2.4" fill="none"
+          stroke="currentColor" stroke-width="1.8"/>
+    <circle cx="8.6" cy="10" r="1.6" fill="currentColor"/>
+    <path d="M4.2 16.6 9 12.4l3.4 3 2.8-2.2 4.6 3.8" fill="none" stroke="currentColor"
+          stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="i-search" viewBox="0 0 24 24">
+    <circle cx="11" cy="11" r="6.4" fill="none" stroke="currentColor" stroke-width="1.8"/>
+    <path d="m15.8 15.8 4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="i-send" viewBox="0 0 24 24">
+    <path d="M4.5 12 20 4.5l-4 15.5-4.2-6-7.3-2Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+  </symbol>
+  <symbol id="i-sparkle" viewBox="0 0 24 24">
+    <path d="M12 3.5 13.7 9l5.5 1.7-5.5 1.7L12 18l-1.7-5.6L4.8 10.7 10.3 9 12 3.5Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+  </symbol>
+</svg>
+
+<header class="masthead">
+  <div class="wrap masthead-row">
+    <a class="brand" href="#" id="home-link">
+      <span class="brand-tile">
+        <img class="brand-mark" src="logo.png" alt="WasteWise" width="192" height="192" />
+      </span>
+      <span class="brand-text">
+        <span class="brand-name">WasteWise</span>
+        <span class="brand-tagline">Know before you throw.</span>
+      </span>
+    </a>
+    <span class="brand-campus">Yale SOM</span>
+  </div>
+</header>
+
+<nav class="tabs wrap" role="tablist" aria-label="Sections">
+  <button role="tab" class="tab is-active" data-panel="ask" aria-selected="true" id="tab-ask">Ask</button>
+  <button role="tab" class="tab" data-panel="guide" aria-selected="false" id="tab-guide">Quick guide</button>
+  <button role="tab" class="tab" data-panel="about" aria-selected="false" id="tab-about">About</button>
+</nav>
+
+<main class="wrap">
+
+  <!-- ===================== ASK ===================== -->
+  <section id="panel-ask" class="panel is-active" role="tabpanel" aria-labelledby="tab-ask">
+
+    <div class="hero" id="hero">
+      <h1 class="greeting">Hey! What are we tossing today?</h1>
+
+      <div class="entries">
+        <button type="button" class="entry" id="entry-ask">
+          <svg class="entry-icon" aria-hidden="true"><use href="#i-chat"/></svg>
+          <span class="entry-title">Ask a question</span>
+          <span class="entry-sub">Tell me what you’ve got</span>
+        </button>
+        <button type="button" class="entry" id="entry-photo">
+          <svg class="entry-icon" aria-hidden="true"><use href="#i-camera"/></svg>
+          <span class="entry-title">Snap a photo</span>
+          <span class="entry-sub">I’ll help sort it</span>
+        </button>
+      </div>
+    </div>
+
+    <form id="ask-form" autocomplete="off">
+      <label class="sr-only" for="question">What are you throwing away?</label>
+      <div class="composer">
+        <div class="composer-top">
+          <svg class="composer-icon" aria-hidden="true"><use href="#i-chat"/></svg>
+          <textarea id="question" name="question" rows="1" maxlength="500"
+            placeholder="Ask WasteWise anything about sorting…"></textarea>
+        </div>
+        <div class="composer-bar">
+          <button type="button" id="photo-btn" class="icon-btn" aria-label="Add a photo">
+            <svg aria-hidden="true"><use href="#i-camera"/></svg>
+          </button>
+          <span class="hint">Enter to send · Shift + Enter for a new line</span>
+          <span id="counter" class="counter">0 / 500</span>
+          <button type="submit" id="submit" class="send-btn" aria-label="Ask WasteWise">
+            <svg aria-hidden="true"><use href="#i-send"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Two inputs: `capture` opens the rear camera directly on a phone, but it
+           also removes the option to pick an existing photo, so the library needs
+           its own input without it. Desktop ignores `capture` entirely. -->
+      <input type="file" id="photo-camera" accept="image/*" capture="environment" hidden />
+      <!-- `image/*` rather than an enumerated MIME list: iOS Safari narrows the
+           sheet to Files when specific types are listed, which hides the photo
+           library. Type and magic bytes are still validated in JS and server-side. -->
+      <input type="file" id="photo-library" accept="image/*" hidden />
+      <div id="photo-choice" class="photo-choice" hidden>
+        <button type="button" id="choose-camera" class="photo-choice-btn">
+          <svg aria-hidden="true"><use href="#i-camera"/></svg> Take photo
+        </button>
+        <button type="button" id="choose-library" class="photo-choice-btn">
+          <svg aria-hidden="true"><use href="#i-image"/></svg> Choose from library
+        </button>
+      </div>
+      <div id="photo-preview" class="photo-preview" hidden>
+        <img id="photo-thumb" alt="" />
+        <div class="photo-meta">
+          <span id="photo-name" class="photo-name"></span>
+          <span id="photo-size" class="photo-size"></span>
+        </div>
+        <button type="button" id="photo-remove" class="photo-remove" aria-label="Remove photo">Remove</button>
+      </div>
+    </form>
+
+    <p class="trybar" id="examples">
+      <span class="try-label">Try:</span>
+      <button class="chip" type="button">Coffee cup</button><span class="dot">·</span>
+      <button class="chip" type="button">Banana peel</button><span class="dot">·</span>
+      <button class="chip" type="button">Plastic fork</button><span class="dot">·</span>
+      <button class="chip" type="button">Pizza box</button>
+    </p>
+
+    <div class="chat-head" id="chat-head" hidden>
+      <span class="chat-head-label">This conversation</span>
+      <button type="button" id="clear-chat" class="chat-clear">Clear chat</button>
+    </div>
+    <div id="chat" class="chat" aria-live="polite"></div>
+  </section>
+
+  <!-- ===================== QUICK GUIDE ===================== -->
+  <section id="panel-guide" class="panel" role="tabpanel" aria-labelledby="tab-guide">
+    <h2 class="panel-h">Quick sorting guide</h2>
+    <div class="search">
+      <svg class="search-icon" aria-hidden="true"><use href="#i-search"/></svg>
+      <label class="sr-only" for="guide-search">Search items</label>
+      <input type="search" id="guide-search" placeholder="Search an item…" />
+    </div>
+    <div class="filters" id="guide-filters" role="group" aria-label="Filter by destination"></div>
+    <div id="guide-list" class="guide-list">Loading…</div>
+    <p id="guide-empty" class="guide-empty" hidden>
+      No match. Try a different word — or just ask WasteWise in the Ask tab.
+    </p>
+  </section>
+
+  <!-- ===================== ABOUT ===================== -->
+  <section id="panel-about" class="panel" role="tabpanel" aria-labelledby="tab-about">
+
+    <div class="why">
+      <h2 class="why-h">Why WasteWise?</h2>
+      <p>We’ve all experienced it: waste sorting at Evans Hall can be confusing! Different
+        bins, inconsistent signage, and uncertainty about what actually gets recycled or
+        composted make it harder to do the right thing.</p>
+      <p>As your 1Y Sustainability Chair, I built WasteWise to make sorting simpler for
+        students — and to better understand where our waste systems could improve.</p>
+      <p>The goal is twofold: help students make informed decisions in the moment, and use
+        anonymous patterns in their questions to identify opportunities for clearer signage,
+        better education, and operational improvements.</p>
+    </div>
+
+    <details class="acc">
+      <summary><span>Waste sorting at Evans Hall</span><svg class="acc-chev" aria-hidden="true"><use href="#i-chevron"/></svg></summary>
+      <div class="acc-body">
+        <p class="about-intro">
+          What we have documented in this building, and what is still an open question.
+          Yale-wide rules in the Quick guide are backed by published Yale and Connecticut
+          sources; the notes below are our own observations of Evans Hall.
+        </p>
+        <div id="about-list" class="about-list">Loading…</div>
+      </div>
+    </details>
+
+    <details class="acc">
+      <summary><span>Yale waste resources</span><svg class="acc-chev" aria-hidden="true"><use href="#i-chevron"/></svg></summary>
+      <div class="acc-body">
+        <ul id="about-resources" class="resources"></ul>
+      </div>
+    </details>
+
+    <details class="acc">
+      <summary><span>New Haven and CT waste resources</span><svg class="acc-chev" aria-hidden="true"><use href="#i-chevron"/></svg></summary>
+      <div class="acc-body">
+        <p class="about-intro">
+          Looking to sort waste beyond Evans Hall? Explore local recycling guidelines,
+          composting resources, and waste management information for New Haven and
+          Connecticut. These programs are separate from Yale’s campus waste system, so
+          local guidelines may differ.
+        </p>
+        <ul class="resources">
+          <li><a href="https://www.newhavenct.gov/government/departments-divisions/public-works-department/trash-recycling"
+                 target="_blank" rel="noopener noreferrer">New Haven Public Works — trash &amp; recycling →</a></li>
+          <li><a href="https://www.newhavenct.gov/government/departments-divisions/office-of-climate-and-sustainability/recycling-resources"
+                 target="_blank" rel="noopener noreferrer">New Haven — recycling resources →</a></li>
+          <li><a href="https://www.newhavenct.gov/government/departments-divisions/office-of-climate-and-sustainability/compost-initiative"
+                 target="_blank" rel="noopener noreferrer">New Haven — compost initiative →</a></li>
+          <li><a href="https://www.recyclect.com/" target="_blank" rel="noopener noreferrer">RecycleCT Wizard — look up any item →</a></li>
+          <li><a href="https://portal.ct.gov/DEEP/Waste-Management-and-Disposal/What-Do-I-Do-With"
+                 target="_blank" rel="noopener noreferrer">CT DEEP — “What do I do with…?” →</a></li>
+        </ul>
+        <p class="about-note">
+          We link the city’s pages rather than repeat their details: drop-off locations, hours
+          and terms are set by New Haven and we have not independently confirmed them. Check
+          the city’s own page before you go.
+        </p>
+      </div>
+    </details>
+
+    <p class="about-note">
+      WasteWise is a student project for Yale SOM AI Foundations. It is not an official Yale
+      service, and it does not speak for Yale Facilities, Yale Hospitality or the City of New Haven.
+    </p>
+  </section>
+</main>
+
+<footer class="wrap footer">
+  <p>
+    WasteWise is a student project for Yale SOM AI Foundations — not an official Yale
+    service. It answers from a small set of cited rules and tells you when something
+    isn’t settled. Photos are sent to the AI model for identification and are never
+    saved, and your conversation stays in this browser tab only. It does not measure
+    actual waste contamination.
+  </p>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

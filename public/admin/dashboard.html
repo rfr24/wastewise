@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex, nofollow" />
+<title>WasteWise Operations</title>
+<link rel="stylesheet" href="/admin/admin.css" />
+</head>
+<body>
+
+<header class="ops-head">
+  <div class="ops-wrap ops-head-row">
+    <img class="ops-logo" src="/logo.png" alt="" width="192" height="192" />
+    <div class="ops-title">
+      <h1>WasteWise Operations</h1>
+      <p>Sustainability dashboard · Yale SOM</p>
+    </div>
+    <button type="button" id="logout" class="ops-logout">Sign out</button>
+  </div>
+</header>
+
+<div class="ops-wrap">
+  <nav class="ops-tabs" role="tablist" aria-label="Dashboard sections">
+    <button role="tab" class="ops-tab is-active" data-panel="overview" aria-selected="true">Overview</button>
+    <button role="tab" class="ops-tab" data-panel="insights" aria-selected="false">Sorting insights</button>
+    <button role="tab" class="ops-tab" data-panel="feedback" aria-selected="false">Feedback</button>
+    <button role="tab" class="ops-tab" data-panel="opportunities" aria-selected="false">Opportunities</button>
+  </nav>
+
+  <div class="ops-rangebar">
+    <span class="ops-range-label">Reporting period</span>
+    <div class="ops-ranges" role="group" aria-label="Reporting period">
+      <button type="button" class="ops-range is-on" data-range="7d">Last 7 days</button>
+      <button type="button" class="ops-range" data-range="30d">Last 30 days</button>
+      <button type="button" class="ops-range" data-range="all">All time</button>
+    </div>
+    <span id="range-note" class="ops-range-note"></span>
+  </div>
+
+  <div class="ops-rangebar">
+    <span class="ops-range-label">Traffic</span>
+    <div class="ops-ranges" role="group" aria-label="Traffic cohort">
+      <button type="button" class="ops-range is-on" data-cohort="operational">Operational</button>
+      <button type="button" class="ops-range" data-cohort="student_eval">Student evaluation</button>
+      <button type="button" class="ops-range" data-cohort="public">Public</button>
+      <button type="button" class="ops-range" data-cohort="development">Development</button>
+      <button type="button" class="ops-range" data-cohort="all">All</button>
+    </div>
+    <span id="cohort-note" class="ops-range-note"></span>
+  </div>
+  <div id="cohort-banner" class="cohort-banner" hidden></div>
+
+  <main>
+    <section id="panel-overview" class="ops-panel is-active" role="tabpanel">
+      <div id="kpis" class="kpi-grid"></div>
+      <div class="ops-card">
+        <h2>Questions per day</h2>
+        <p class="ops-sub">Each bar is one day. Hover or read the table below for exact counts.</p>
+        <div id="daily-chart"></div>
+      </div>
+      <details class="ops-defs" id="definitions-toggle">
+        <summary>What these numbers mean, and what they cannot show</summary>
+        <dl id="definitions"></dl>
+      </details>
+    </section>
+
+    <section id="panel-insights" class="ops-panel" role="tabpanel">
+      <div id="insights-body"></div>
+    </section>
+
+    <section id="panel-feedback" class="ops-panel" role="tabpanel">
+      <div id="feedback-body"></div>
+    </section>
+
+    <section id="panel-opportunities" class="ops-panel" role="tabpanel">
+      <div id="opportunities-body"></div>
+    </section>
+  </main>
+
+  <footer class="ops-foot">
+    <p>
+      Counts are of <strong>questions asked</strong> — not students, and not disposal
+      actions. <a href="#definitions-toggle" id="methodology-link">How these numbers work</a>.
+    </p>
+  </footer>
+</div>
+
+<script src="/admin/dashboard.js"></script>
+</body>
+</html>
