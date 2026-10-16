@@ -16,6 +16,16 @@ const app = express();
 const PORT = process.env.PORT ?? 3000;
 
 app.disable('x-powered-by');
+
+/*
+ * Behind a managed host, every request arrives through exactly one reverse
+ * proxy. Without this, req.ip is the proxy's address for every visitor, so the
+ * per-IP rate limits collapse into a single shared bucket and the whole app is
+ * throttled at one user's budget. One hop is trusted in production, none
+ * locally, and TRUST_PROXY overrides both — trusting more hops than actually
+ * sit in front would let a client spoof its own address via X-Forwarded-For.
+ */
+app.set('trust proxy', Number(process.env.TRUST_PROXY ?? (process.env.NODE_ENV === 'production' ? 1 : 0)));
 app.use(express.json({ limit: process.env.JSON_BODY_LIMIT ?? '10mb' }));
 
 app.use((req, res, next) => {
@@ -107,10 +117,14 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
     console.log(`[wastewise] provider: ${PROVIDER} · model: ${MODEL}`);
   }
   // Loopback by default — binding to the LAN is opt-in, for phone testing only.
-  const HOST = process.env.HOST ?? '127.0.0.1';
+  // A managed host routes to the container's external interface, so production
+  // must bind 0.0.0.0 or the platform's health check never connects.
+  const HOST = process.env.HOST ?? (process.env.NODE_ENV === 'production' ? '0.0.0.0' : '127.0.0.1');
   app.listen(PORT, HOST, () => {
     console.log(`WasteWise running at http://localhost:${PORT}`);
-    if (HOST === '0.0.0.0') {
+    // The LAN notice is for phone testing on a laptop; a managed host binds the
+    // same way and listing its interfaces there would be noise, not a warning.
+    if (HOST === '0.0.0.0' && process.env.NODE_ENV !== 'production') {
       const nets = networkInterfaces();
       for (const addrs of Object.values(nets)) {
         for (const a of addrs ?? []) {

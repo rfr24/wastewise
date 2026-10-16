@@ -37,3 +37,6 @@ tmp/
 .vscode/
 .idea/
 .claude/
+
+# Design reference artwork, kept locally. The app's own asset is public/logo.png.
+Eco Chat Recycling Icon*.png

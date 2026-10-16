@@ -11,7 +11,7 @@ that answer is.
 base (`data/rules.json`), not from the model's general knowledge. Every rule carries a
 verification status, and the app refuses to present an unconfirmed rule as Yale policy.
 
-## What it does today (MVP increment 4)
+## What it does today
 
 - Text question → sorting recommendation, grounded in the rules knowledge base
 - Confidence labeling: `confirmed` / `likely` / `uncertain`, enforced in code
@@ -25,8 +25,11 @@ verification status, and the app refuses to present an unconfirmed rule as Yale 
   lists each distinct object, and every item is retrieved, guarded and answered separately
 - **Conflict flagging** when photographed local signage contradicts Yale-wide guidance
 - Exact token tracking on every API call, across both passes of a photo request
+- **Operations dashboard** (`/admin`, password-protected) — question volume, confusion
+  patterns, feedback, and consolidated signage opportunities, separated by traffic cohort
 
-Not built yet: the operations dashboard UI, the final report.
+Both the student assistant and the operations dashboard are complete. The app has not
+yet been deployed publicly and has not yet been tested with real students.
 
 ## Quick start
 
@@ -40,25 +43,35 @@ If you are working inside the course folder, a `PORTKEY_API_KEY` in a parent
 directory's `.env` is picked up automatically — `server/env.js` walks up from the
 project root. Already-set environment variables always win.
 
-Node 20.6+ required (the app uses the built-in `node:sqlite` module, so there is no
-native build step). `npm run dev` starts it with file watching; `npm test` runs the suite.
+**Node 24+ required** (declared in `package.json` as `engines.node`). The app uses the
+built-in `node:sqlite` module, so there is no native build step and no compiler toolchain
+on the host. `npm run dev` starts it with file watching; `npm test` runs the suite.
 
-The SQLite file is created automatically at `data/wastewise.db` on first run.
+The SQLite file is created automatically at `data/wastewise.db` on first run; the
+directory is created if it does not exist.
 
 ## Architecture
 
 ```
-public/              Mobile-first frontend (no build step, plain HTML/CSS/JS)
+public/              Mobile-first student frontend (no build step, plain HTML/CSS/JS)
+  admin/             Operations dashboard — sign-in page and the four-tab dashboard
 server/
-  index.js           Express app; serves the API and the static frontend
+  index.js           Express app; serves the API, the frontend, /admin and /eval
   routes/api.js      /ask, /guide, /feedback, /usage, /health
+  routes/admin.js    /login, /logout, /session, /overview, /insights, /feedback,
+                     /opportunities, /cohorts — every one behind requireAdmin
+  admin-auth.js      HMAC-signed session cookies, constant-time compare, login throttle
+  cohort.js          Traffic cohorts; signed evaluation cookie, assigned server-side
+  build.js           Build id for trace correlation; diagnostics gate; image header reads
+  env.js             Loads .env from the project root, then walks up to parents
   services/
     rules.js         Keyword/alias retrieval over the knowledge base
     llm.js           Provider abstraction (Portkey / Anthropic), usage + cost
     vision.js        Photo pass — describes the item ONLY, never picks a stream
     parse.js         Tolerant JSON extraction shared by both passes
     assistant.js     Prompt, JSON parsing, verification and clarification guardrails
-    db.js            SQLite (node:sqlite): query log + feedback + usage aggregates
+    db.js            SQLite (node:sqlite): schema, additive migrations, query log
+    analytics.js     Every dashboard aggregate, with explicit coverage reporting
   middleware/
     limits.js        Per-IP rate limit + hard daily cap on billable calls
     validate.js      Length limits, control-char stripping, injection screening
@@ -140,6 +153,19 @@ and this is confirmed by live runs.
 | `GET /api/usage` | Aggregate counts, tokens, clarifications asked, and estimated cost |
 | `GET /api/health` | Liveness check |
 
+Admin endpoints live under `/api/admin` and every one is behind `requireAdmin`:
+
+| Endpoint | Purpose |
+|---|---|
+| `POST /api/admin/login` · `POST /api/admin/logout` · `GET /api/admin/session` | Session handling |
+| `GET /api/admin/overview` | KPIs, daily volume, latency and token totals with coverage |
+| `GET /api/admin/insights` | Confusion patterns, destinations, confidence, item grouping |
+| `GET /api/admin/feedback` | Feedback detail |
+| `GET /api/admin/opportunities` | Consolidated signage and education opportunities |
+| `GET /api/admin/cohorts` | Available cohorts and their row counts |
+
+All of them accept `range` (`7d` / `30d` / `all`) and `cohort` (see below).
+
 ## The knowledge base and verification statuses
 
 `data/rules.json` is the source of truth. Each rule has one of three statuses:
@@ -150,7 +176,7 @@ and this is confirmed by live runs.
 | `observational` | Based on photographed Evans Hall signage or bin layout | Must present as an *observation* of what is posted — not a confirmed processing requirement |
 | `unverified` | Drafted from general practice or an unconfirmed claim | Must express uncertainty; must not present as Yale guidance |
 
-**Current status: 18 rules — 13 `verified`, 1 `observational`, 4 `unverified`.**
+**Current status: 23 rules — 16 `verified`, 4 `observational`, 3 `unverified`.**
 
 The verified rules cite published Yale pages that state the requirement directly:
 
@@ -236,9 +262,8 @@ Note that `compostable-serviceware` **is** verified, and verified to **trash**: 
 compostable utensils, plates and cups are neither recyclable nor accepted in food waste
 bins. That is a restriction, not a claim that Evans Hall accepts compost.
 
-The two remaining `unverified` rules — `cup-lid-plastic` and
-`utensils-conventional-plastic` — are items Yale has not published a rule for. The app
-says so rather than guessing.
+The remaining `unverified` rule, `cup-lid-plastic`, is an item Yale has not published a
+rule for. The app says so rather than guessing.
 
 ### Adding or promoting a rule
 
@@ -269,14 +294,176 @@ pick up changes.
   rather than an invented figure. Set `PRICE_INPUT_PER_MTOK` and `PRICE_OUTPUT_PER_MTOK`
   once the course publishes rates and the estimates appear. Read it all with `GET /api/usage`.
 
+## The operations dashboard
+
+`/admin` is an admin-only view of what students are confused about. It is deliberately
+absent from the student-facing navigation, and an unauthenticated visitor is served the
+sign-in page rather than the dashboard markup. Four tabs: **Overview** (volume, unresolved
+share, tokens, response time), **Sorting insights** (confusion patterns, where items were
+directed, confidence), **Feedback**, and **Opportunities** (consolidated signage and
+education actions, each with its supporting evidence).
+
+**It counts questions, not students and not disposal actions.** There are no accounts, so
+repeat questions cannot be attributed to a person, and nothing here measures whether
+anyone actually sorted anything. Every figure that is only partially covered says so
+rather than implying a confident total: 50 early multi-item photos predate per-item
+records and are reported as a coverage gap, response times are only recorded from the
+release that added them, and cost is `null` because no rate card exists for the model.
+
+### Traffic cohorts
+
+Analytics would be worthless if the author's own testing were mixed in with real student
+use, so every row is tagged with one of three cohorts:
+
+| Cohort | What it is |
+|---|---|
+| `development` | The author's own testing. All 88 existing local rows are this. |
+| `student_eval` | A structured evaluation session with a recruited participant |
+| `public` | Organic public use — the default once `NODE_ENV=production` |
+
+A cohort is decided **server-side only** — from configuration, or for evaluation sessions
+from an HMAC-signed cookie set by visiting `/eval?code=…` with the organiser's code. It is
+never read from a request body or query parameter, so a caller cannot label their own
+traffic. The evaluation code is **not** an admin credential and grants access to nothing.
+The dashboard defaults to the **Operational** filter (everything except development).
+
+## Security
+
+- **Credentials never leave the server.** The browser receives no API key and no
+  configuration; `.env` is gitignored and has never been committed.
+- **Admin authentication:** one shared secret, exchanged for an HMAC-signed, `HttpOnly`,
+  `SameSite=Lax` session cookie. The secret is never sent to the browser, never appears in
+  an API response, and is not stored in the database. Comparisons are constant-time over
+  SHA-256 digests. If `ADMIN_PASSWORD` is unset the admin area stays **switched off**
+  rather than falling open.
+- **Login throttling:** 5 attempts per IP per 15 minutes (configurable).
+- **HTTPS required in production:** with `NODE_ENV=production`, an admin sign-in over
+  plaintext HTTP is refused with 403. Session cookies carry `Secure` in production.
+- **Reverse proxies:** one hop is trusted in production so per-IP limits see the real
+  client address. Trusting more hops than actually sit in front would let a client spoof
+  its address via `X-Forwarded-For` — override with `TRUST_PROXY` only if your host adds
+  more.
+- **Diagnostics cannot be switched on in production**, whatever the environment says.
+- `X-Content-Type-Options: nosniff`, `Referrer-Policy: no-referrer`, `x-powered-by` off.
+
 ## Privacy
 
-No account, no login, no session, no IP logging. Stored per question: the question text,
-the identified item/category, the recommendation, confidence, and token counts — used for
-the operations dashboard. IP addresses are used only in memory for rate limiting and are
-never written to the database. **Uploaded photos are held in memory for the single API
-call and are never written to disk or stored in the database** — only a `had_image` flag
-is recorded.
+No accounts and no student login. IP addresses are held **in memory only**, for rate
+limiting, and are never written to the database. Two cookies exist and neither identifies
+anyone: the admin session cookie, and the evaluation-cohort cookie (which stores the
+literal string `student_eval` and a signature, nothing else).
+
+**Stored per question:** the question text, the identified item and category, the
+recommendation, confidence, matched rule ids, token counts, response time, and cohort.
+**Uploaded photos are held in memory for the single API call and are never written to
+disk or stored in the database** — only a `had_image` flag is recorded.
+
+Question text is free-form, so a student could in principle type something identifying
+into it. Nothing prompts for personal information and no identifier is attached to a row,
+but the text is stored verbatim for the confusion analysis the dashboard is built on.
+
+## Testing
+
+```bash
+npm test          # 329 tests across 16 files, no network calls
+```
+
+The suite is offline and deterministic: no test calls the model API. Model behaviour is
+exercised through recorded shapes and through the deterministic code paths — retrieval,
+`enforceVerification()`, hazard handling, parsing, analytics aggregation, auth, cohort
+assignment, and the rendered markup of both frontends.
+
+Two tests depend on private photographs taken on a personal phone. Those files are not
+published with the repository, and the tests **skip cleanly** when they are absent, so a
+fresh clone reports 328 passing and 1 skipped with no failures.
+
+The dataset is guarded by tests too: every rule needs an id, guidance, aliases, a citation
+and a valid verification status; every `verified` rule must cite a real `*.yale.edu` URL;
+and no `unverified` rule may assert a stream.
+
+## Configuration
+
+Every variable is documented with placeholder values in `.env.example`. Nothing here has
+a secret default, and the app refuses to invent one.
+
+| Variable | Purpose |
+|---|---|
+| `PORTKEY_API_KEY` | Course gateway credential. **Required.** |
+| `PORTKEY_MODEL` · `PORTKEY_BASE_URL` · `PORTKEY_PROVIDER` | Gateway configuration |
+| `LLM_PROVIDER` | `portkey` (default when a Portkey key is set) or `anthropic` |
+| `ANTHROPIC_API_KEY` · `ANTHROPIC_MODEL` · `ANTHROPIC_EFFORT` | Alternative provider |
+| `NODE_ENV` | `production` enables HTTPS enforcement, disables diagnostics, defaults the cohort to `public` |
+| `PORT` · `HOST` | Listening port; host defaults to `0.0.0.0` in production, loopback locally |
+| `TRUST_PROXY` | Reverse-proxy hops to trust. Defaults to 1 in production, 0 locally |
+| `DB_PATH` | Where SQLite lives. Point at a persistent volume in production |
+| `DEFAULT_COHORT` | Overrides the cohort new traffic is recorded as |
+| `EVAL_ACCESS_CODE` | Enables `/eval?code=…` evaluation tagging. Not an admin credential |
+| `ADMIN_PASSWORD` | **Required to enable `/admin`.** Unset means the dashboard is off |
+| `ADMIN_SESSION_SECRET` | Keeps admin sessions valid across restarts (16+ chars) |
+| `ADMIN_SESSION_HOURS` · `ADMIN_LOGIN_MAX` · `ADMIN_LOGIN_WINDOW_MS` | Session and throttle tuning |
+| `RATE_LIMIT_WINDOW_MS` · `RATE_LIMIT_MAX` · `DAILY_REQUEST_CAP` | Abuse and cost protection |
+| `MAX_QUESTION_CHARS` · `MAX_IMAGE_BYTES` · `LLM_TIMEOUT_MS` | Input bounds |
+| `PRICE_INPUT_PER_MTOK` · `PRICE_OUTPUT_PER_MTOK` | Optional cost estimation rates |
+| `OPPORTUNITY_MIN_OBSERVATIONS` | Observations before a pattern becomes an opportunity |
+
+### Database configuration
+
+SQLite, via the built-in `node:sqlite` module. `DB_PATH` selects the file; its directory
+is created if missing, and the schema is created on first run, so a brand-new file
+initialises **empty and migrated** with no manual step. Migrations are additive only —
+columns added later are `NULL` for older rows, and the dashboard labels them as uncovered
+rather than treating absence as zero.
+
+Development and production are separate files by configuration: local work uses
+`./data/wastewise.db`, production points `DB_PATH` at a persistent volume
+(e.g. `/var/data/wastewise.db`). **No development record is ever copied into production** —
+a production database starts empty and fills only with real traffic. Every `.db` file is
+gitignored, so neither database is ever published.
+
+### Backup and recovery
+
+SQLite is one file, so backup is a file copy — but a copy taken while the server is
+writing can be torn. Use SQLite's own online backup, which is safe against a live writer:
+
+```bash
+sqlite3 /var/data/wastewise.db ".backup '/var/data/backups/wastewise-$(date +%F).db'"
+```
+
+Proposed approach, in order of what it protects against:
+
+- **Scheduled copy.** A daily `.backup` into a dated file on the same volume, keeping the
+  last 7 and a weekly for a month. Protects against a bad migration or accidental delete.
+- **Off-volume copy.** The dated file pulled off the host periodically, so the data
+  survives losing the volume itself. For a dataset this small, a manual download before
+  and after each evaluation session is enough.
+- **Before any schema change**, take a `.backup` first. Migrations here are additive and
+  never drop data, but the cost of a copy is nothing against the cost of losing feedback.
+- **Recovery** is a file swap: stop the app, move the dated file to `DB_PATH`, start it.
+  Verify with a row count against the dashboard's own totals before trusting it.
+- **Verify restores, not just backups.** A backup that has never been restored is a
+  hypothesis. Restore one into a scratch `DB_PATH` and open the dashboard against it.
+
+`backups/` and every `*.db` / `*.bak` / `*.dump` pattern are gitignored, so a backup can
+never be committed.
+
+## Known limitations
+
+- **Not measured:** WasteWise does not measure contamination, diversion, or behaviour
+  change. It measures questions asked and feedback given.
+- **Evans Hall compost is unconfirmed.** Yale states it lacks capacity for non-dining
+  spaces, and does not name Evans Hall either way, so the app will not tell a student
+  their scraps are composted.
+- **Signage observations are observations.** Four rules come from photographed Evans Hall
+  signage and can never answer "confirmed".
+- **No rate card exists for `gpt-6-luna`**, so cost is reported as `null`, not `$0.00`.
+- **Partial analytics coverage** on response time and per-item photo outcomes, for rows
+  predating those fields. The dashboard reports the coverage rather than hiding it.
+- **Single process, in-memory limits.** Rate limits and the daily cap live in process
+  memory, so they reset on restart and would need Redis if ever scaled beyond one instance.
+- **SQLite is single-writer** and tied to one volume, which rules out multi-region hosting.
+- **Model output varies between runs.** The deterministic guardrails constrain what can be
+  said, not which phrasing comes back.
+- **Not an official Yale service.** A student project.
 
 ## Scope limits
 
@@ -288,7 +475,16 @@ is recorded.
 
 ## Deployment
 
-Any Node host works (Render, Railway, Fly.io). Set `PORTKEY_API_KEY` and the other
-`.env.example` variables as environment variables, and run `npm start`. The SQLite file
-lives on local disk, so attach a persistent volume if you need the dashboard data to
-survive restarts.
+Node 24+, no build step, no native dependencies — `npm ci && npm start` is the whole
+process. The requirements that matter:
+
+1. **A persistent volume**, with `DB_PATH` pointing into it (e.g. `/var/data/wastewise.db`).
+   Without one, every restart silently starts an empty database.
+2. **HTTPS**, which admin sign-in requires in production. Both recommended hosts terminate
+   TLS for you.
+3. **`NODE_ENV=production`**, which enforces HTTPS for admin, disables diagnostics, marks
+   cookies `Secure`, binds `0.0.0.0`, and records new traffic as `public`.
+4. **Secrets as environment variables** — never in the repository. At minimum
+   `PORTKEY_API_KEY` and `ADMIN_PASSWORD`; set `ADMIN_SESSION_SECRET` too, or every
+   restart signs you out.
+5. **One instance.** SQLite is single-writer and the rate limits are in-process.
