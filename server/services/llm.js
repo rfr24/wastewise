@@ -28,11 +28,29 @@ export const MODEL = PROVIDER === 'portkey' ? PORTKEY_MODEL : ANTHROPIC_MODEL;
  * null and the API reports estimated_cost_usd: null rather than inventing a number.
  * Token counts are always exact regardless.
  */
-export function estimateCost(inputTokens, outputTokens) {
+export function estimateCost(inputTokens, outputTokens, cachedInputTokens = null) {
   const inRate = process.env.PRICE_INPUT_PER_MTOK;
   const outRate = process.env.PRICE_OUTPUT_PER_MTOK;
   if (inRate === undefined || inRate === '' || outRate === undefined || outRate === '') return null;
-  return (inputTokens / 1e6) * Number(inRate) + (outputTokens / 1e6) * Number(outRate);
+  const cachedRate = process.env.PRICE_CACHED_INPUT_PER_MTOK;
+  /*
+   * Cached prompt tokens bill at a lower rate, so charging them at the full
+   * input rate overstates cost — on this app's prompts the cached share of a
+   * repeated call is almost the whole prompt. Only split the input when both a
+   * cached rate and a measured cached count are available; otherwise fall back
+   * to charging everything at the standard rate, which can overstate but never
+   * understates.
+   */
+  const cached =
+    cachedRate !== undefined && cachedRate !== '' && Number.isFinite(cachedInputTokens)
+      ? Math.min(cachedInputTokens, inputTokens)
+      : 0;
+  const fresh = inputTokens - cached;
+  return (
+    (fresh / 1e6) * Number(inRate) +
+    (cached / 1e6) * Number(cachedRate ?? 0) +
+    (outputTokens / 1e6) * Number(outRate)
+  );
 }
 
 let openaiClient = null;
@@ -95,12 +113,24 @@ async function completePortkey({ system, text, image }) {
   const usage = response.usage ?? {};
   const inputTokens = usage.prompt_tokens ?? 0;
   const outputTokens = usage.completion_tokens ?? 0;
+  /*
+   * The gateway reports how much of the prompt was served from its cache.
+   * Verified against the live API: an identical repeated call returns
+   * cached_tokens equal to the cache_write_tokens of the first call. Both are
+   * recorded as reported — never inferred — so a run's cached share is measured
+   * rather than estimated. Absent fields stay null rather than becoming 0.
+   */
+  const detail = usage.prompt_tokens_details ?? {};
+  const num = (v) => (typeof v === 'number' ? v : null);
   return {
     text: response.choices?.[0]?.message?.content ?? '',
     model: response.model ?? PORTKEY_MODEL,
     input_tokens: inputTokens,
     output_tokens: outputTokens,
-    estimated_cost_usd: estimateCost(inputTokens, outputTokens),
+    cached_input_tokens: num(detail.cached_tokens),
+    cache_write_tokens: num(detail.cache_write_tokens),
+    reasoning_tokens: num(usage.completion_tokens_details?.reasoning_tokens),
+    estimated_cost_usd: estimateCost(inputTokens, outputTokens, num(detail.cached_tokens)),
     refused: response.choices?.[0]?.finish_reason === 'content_filter',
   };
 }

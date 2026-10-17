@@ -40,8 +40,34 @@ npm start                # http://localhost:3000
 ```
 
 If you are working inside the course folder, a `PORTKEY_API_KEY` in a parent
-directory's `.env` is picked up automatically — `server/env.js` walks up from the
-project root. Already-set environment variables always win.
+directory's `.env` is picked up automatically — `server/env.js` checks the project root
+first, then walks up to parent directories. Already-set environment variables always win.
+
+### Running this from a fresh clone (teaching staff)
+
+```bash
+git clone https://github.com/rfr24/wastewise.git
+cd wastewise
+npm ci
+npm start                # http://localhost:3000
+```
+
+`PORTKEY_API_KEY` is read from your `.env` one folder above the repo, so if the clone sits
+inside your course folder there is nothing to configure — the student assistant works
+immediately. `npm test` runs 329 offline tests and needs no key at all.
+
+**To open the operations dashboard**, add one line to that same `.env` and restart:
+
+```
+ADMIN_PASSWORD=anything-you-like
+```
+
+Then visit <http://localhost:3000/admin> and sign in with that value. The password is
+never stored and never leaves the server. Without it the dashboard stays switched off by
+design rather than falling open, so this one line is the only extra step.
+
+A fresh clone starts with an **empty** database, so the dashboard will show zeros until
+you ask a few questions. That is expected: no development data ships with the repository.
 
 **Node 24+ required** (declared in `package.json` as `engines.node`). The app uses the
 built-in `node:sqlite` module, so there is no native build step and no compiler toolchain
@@ -290,8 +316,9 @@ pick up changes.
   the assistant asked a clarifying question or confidence is `uncertain`. A question can
   never ship alongside a bin.
 - **Token/cost tracking:** every call logs exact input and output token counts. There is
-  **no published rate card for `gpt-6-luna`**, so `estimated_cost_usd` is `null` by default
-  rather than an invented figure. Set `PRICE_INPUT_PER_MTOK` and `PRICE_OUTPUT_PER_MTOK`
+  **cached** prompt tokens separately, as reported by the gateway. Cost is `null` until
+  rates are configured, rather than an invented figure. Set `PRICE_INPUT_PER_MTOK`,
+  `PRICE_CACHED_INPUT_PER_MTOK` and `PRICE_OUTPUT_PER_MTOK`
   once the course publishes rates and the estimates appear. Read it all with `GET /api/usage`.
 
 ## The operations dashboard
@@ -308,7 +335,7 @@ repeat questions cannot be attributed to a person, and nothing here measures whe
 anyone actually sorted anything. Every figure that is only partially covered says so
 rather than implying a confident total: 50 early multi-item photos predate per-item
 records and are reported as a coverage gap, response times are only recorded from the
-release that added them, and cost is `null` because no rate card exists for the model.
+release that added them, and cost is `null` unless per-token rates are configured.
 
 ### Traffic cohorts
 
@@ -403,7 +430,7 @@ a secret default, and the app refuses to invent one.
 | `ADMIN_SESSION_HOURS` · `ADMIN_LOGIN_MAX` · `ADMIN_LOGIN_WINDOW_MS` | Session and throttle tuning |
 | `RATE_LIMIT_WINDOW_MS` · `RATE_LIMIT_MAX` · `DAILY_REQUEST_CAP` | Abuse and cost protection |
 | `MAX_QUESTION_CHARS` · `MAX_IMAGE_BYTES` · `LLM_TIMEOUT_MS` | Input bounds |
-| `PRICE_INPUT_PER_MTOK` · `PRICE_OUTPUT_PER_MTOK` | Optional cost estimation rates |
+| `PRICE_INPUT_PER_MTOK` · `PRICE_CACHED_INPUT_PER_MTOK` · `PRICE_OUTPUT_PER_MTOK` | Optional cost estimation rates |
 | `OPPORTUNITY_MIN_OBSERVATIONS` | Observations before a pattern becomes an opportunity |
 
 ### Database configuration
@@ -455,7 +482,9 @@ never be committed.
   their scraps are composted.
 - **Signage observations are observations.** Four rules come from photographed Evans Hall
   signage and can never answer "confirmed".
-- **No rate card exists for `gpt-6-luna`**, so cost is reported as `null`, not `$0.00`.
+- **Cost figures are list-price estimates, not invoices.** The app reaches the model
+  through the course's Portkey gateway; published per-token list prices turn exact token
+  counts into dollars, but nothing here observes an actual bill.
 - **Partial analytics coverage** on response time and per-item photo outcomes, for rows
   predating those fields. The dashboard reports the coverage rather than hiding it.
 - **Single process, in-memory limits.** Rate limits and the daily cap live in process

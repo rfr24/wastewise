@@ -667,6 +667,18 @@ ${question || (visionItems ? 'Which bin does each item in my photo go in?' : '')
 
   const inputTokens = completion.input_tokens + (visionUsage?.input_tokens ?? 0);
   const outputTokens = completion.output_tokens + (visionUsage?.output_tokens ?? 0);
+  /*
+   * Cached-prompt totals across both passes, summed only over the passes that
+   * actually reported a number. If neither did, the total stays null — "not
+   * reported" and "nothing was cached" are different facts.
+   */
+  const sumReported = (field) => {
+    const parts = [completion[field], visionUsage?.[field]].filter((v) => typeof v === 'number');
+    return parts.length ? parts.reduce((a, b) => a + b, 0) : null;
+  };
+  const cachedInputTokens = sumReported('cached_input_tokens');
+  const cacheWriteTokens = sumReported('cache_write_tokens');
+  const reasoningTokens = sumReported('reasoning_tokens');
 
   return {
     items,
@@ -678,10 +690,13 @@ ${question || (visionItems ? 'Which bin does each item in my photo go in?' : '')
       // Two calls total for a photo, however many items were in it.
       input_tokens: inputTokens,
       output_tokens: outputTokens,
+      cached_input_tokens: cachedInputTokens,
+      cache_write_tokens: cacheWriteTokens,
+      reasoning_tokens: reasoningTokens,
       vision_calls: visionUsage ? 1 : 0,
       reasoning_calls: 1,
       item_count: items.length,
-      estimated_cost_usd: estimateCost(inputTokens, outputTokens),
+      estimated_cost_usd: estimateCost(inputTokens, outputTokens, cachedInputTokens),
       timings_ms: { ...timings, assistant_total_ms: Math.round(performance.now() - t0) },
     },
   };

@@ -93,6 +93,9 @@ router.post('/ask', rateLimit, dailyCap, async (req, res, next) => {
         usage: {
           model: usage.model, input_tokens: usage.input_tokens,
           output_tokens: usage.output_tokens, fast_path: usage.fast_path === true,
+          cached_input_tokens: usage.cached_input_tokens ?? null,
+          cache_write_tokens: usage.cache_write_tokens ?? null,
+          reasoning_tokens: usage.reasoning_tokens ?? null,
           timings_ms: usage.timings_ms,
         },
       };

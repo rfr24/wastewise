@@ -53,6 +53,17 @@ if (!columns.includes('cohort')) {
 db.exec('CREATE INDEX IF NOT EXISTS idx_queries_cohort ON queries(cohort)');
 
 /*
+ * Cached-prompt accounting. The gateway reports how much of each prompt was
+ * served from cache and how much was written to it; recording them separates
+ * the input tokens that were actually billed as fresh from those that were not.
+ * Null for every row written before these columns existed, and null whenever
+ * the provider did not report the figure — never silently zero.
+ */
+for (const col of ['cached_input_tokens', 'cache_write_tokens', 'reasoning_tokens']) {
+  if (!columns.includes(col)) db.exec(`ALTER TABLE queries ADD COLUMN ${col} INTEGER`);
+}
+
+/*
  * One row per item in a multi-item photo. The parent `queries` row records
  * "multiple" for its recommendation, which loses the per-item destinations —
  * this table keeps them so the dashboard can break photos down by outcome.
@@ -81,8 +92,9 @@ export function recordQuery(row) {
   const stmt = db.prepare(`
     INSERT INTO queries (created_at, question, had_image, identified_item, category,
       recommendation, confidence, needs_clarification, matched_rule_ids, model,
-      input_tokens, output_tokens, estimated_cost_usd, latency_ms, cohort)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      input_tokens, output_tokens, estimated_cost_usd, latency_ms, cohort,
+      cached_input_tokens, cache_write_tokens, reasoning_tokens)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `);
   const info = stmt.run(
     new Date().toISOString(),
@@ -100,6 +112,9 @@ export function recordQuery(row) {
     row.estimated_cost_usd ?? null,
     Number.isFinite(row.latency_ms) ? Math.round(row.latency_ms) : null,
     row.cohort ?? 'development',
+    Number.isFinite(row.cached_input_tokens) ? row.cached_input_tokens : null,
+    Number.isFinite(row.cache_write_tokens) ? row.cache_write_tokens : null,
+    Number.isFinite(row.reasoning_tokens) ? row.reasoning_tokens : null,
   );
   const queryId = Number(info.lastInsertRowid);
 
@@ -164,6 +179,10 @@ export function usageSummary() {
     .prepare(
       `SELECT COUNT(*) AS queries, COALESCE(SUM(input_tokens),0) AS input_tokens,
               COALESCE(SUM(output_tokens),0) AS output_tokens,
+              SUM(cached_input_tokens) AS cached_input_tokens,
+              SUM(cache_write_tokens) AS cache_write_tokens,
+              SUM(reasoning_tokens) AS reasoning_tokens,
+              SUM(CASE WHEN cached_input_tokens IS NOT NULL THEN 1 ELSE 0 END) AS queries_with_cache_data,
               SUM(estimated_cost_usd) AS estimated_cost_usd,
               SUM(CASE WHEN estimated_cost_usd IS NULL THEN 1 ELSE 0 END) AS queries_without_rate
        FROM queries`,
