@@ -44,3 +44,6 @@ Eco Chat Recycling Icon*.png
 # Raw screenshot captures. They are embedded as base64 inside report.html and
 # slides.html, so the deliverables stay self-contained without the originals.
 WasteWise Screenshots/
+
+# Evans Hall station photographs. Embedded as base64 in the deliverables.
+Waste sorting at Evans pics/
