@@ -43,7 +43,7 @@
   td.num,th.num{text-align:right; font-variant-numeric:tabular-nums}
   tbody tr:last-child td{border-bottom:none}
   .shot{margin:16px 0; padding:0; text-align:center; page-break-inside:avoid}
-  .shot img{max-width:100%; max-height:95mm; width:auto; border:1px solid var(--line);
+  .shot img{max-width:100%; max-height:84mm; width:auto; border:1px solid var(--line);
     border-radius:8px; background:#fff}
   .shot figcaption{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
     font-size:.78rem; line-height:1.45; color:var(--muted); text-align:left;
@@ -179,10 +179,10 @@ rule set. Every answer states how well confirmed it is.</p>
       that whether that is correct depends entirely on whether the building actually
       collects compost — which, for Evans Hall, is not something I have been able to
       confirm.</li>
-    <li><strong>Contamination anxiety.</strong> Classmates described a specific hesitation:
-      not knowing whether a wrong guess in the recycling bin makes things worse. That
-      worry pushes people toward the trash by default, or toward standing at the bin
-      reading labels.</li>
+    <li><strong>"Recycling it is the safer guess."</strong> Several classmates worked from
+      the belief that when you are unsure, putting an item in recycling is the
+      conservative choice. It is the opposite: the wrong item can contaminate a whole
+      load, which is why the app refuses to guess rather than guessing optimistically.</li>
   </ul>
 
   <p>The cost here is not dramatic, and I want to be careful not to overstate it. It is
@@ -697,9 +697,12 @@ rule set. Every answer states how well confirmed it is.</p>
 
   <div class="flag">
     <strong>Stating the evidence plainly.</strong> WasteWise has not yet been used by
-    students. Every recorded question but one is my own development testing, in a cohort
-    the system labels <code>development</code>. There is no measured change in
-    sorting behaviour, contamination, or diversion, and this report does not claim one.
+    students and has not been formally evaluated. Friends have tried it informally and
+    given feedback that shaped the wording and the photo flow, but that is not a study:
+    there were no tasks, no measurements, and no record of who used it. Every recorded
+    question but one is my own development testing, in a cohort the system labels
+    <code>development</code>. There is no measured change in sorting behaviour,
+    contamination, or diversion, and this report does not claim one.
     What follows is the qualitative basis for the project and the mechanism by which it
     could produce value — not a measured result.
   </div>
@@ -722,9 +725,13 @@ rule set. Every answer states how well confirmed it is.</p>
         <td><strong>Demonstrated</strong> mechanically</td>
         <td>Dashboard generates four opportunities end to end (Figure 5) — on development
           traffic, and it caught a real gap in the app itself.</td></tr>
+      <tr><td>The app is usable by someone other than its author</td>
+        <td><strong>Demonstrated</strong> informally</td>
+        <td>Friends have tried it and given feedback, which changed the answer wording and
+          the photo flow. Not a study — no tasks, no measurements, no participant record.</td></tr>
       <tr><td>Students sort more accurately after using it</td>
         <td class="cross"><strong>Not demonstrated</strong></td>
-        <td>No student testing has occurred. No measurement exists.</td></tr>
+        <td>No formal evaluation has occurred. No measurement exists.</td></tr>
       <tr><td>Contamination or diversion rates improve</td>
         <td class="cross"><strong>Not demonstrated</strong></td>
         <td>The app does not measure either, and makes no such claim.</td></tr>
@@ -749,10 +756,10 @@ rule set. Every answer states how well confirmed it is.</p>
   <p>The durable value of this project is not the answer given to one student. It is that
   the questions students ask are themselves the data a Sustainability Chair has never had.</p>
 
-  <p>As 1Y Sustainability Chair I expect to meet regularly with SOM Facilities. Those
-  conversations are currently driven by impressions. WasteWise's dashboard is designed to
-  replace impressions with a standing, anonymous record of what the building's occupants
-  are actually confused about:</p>
+  <p>As 1Y Sustainability Chair I meet with the SOM Facilities team <strong>biweekly</strong>.
+  Those conversations are currently driven by impressions. WasteWise's dashboard is
+  designed to replace impressions with a standing, anonymous record of what the building's
+  occupants are actually confused about:</p>
 
   <ul>
     <li><strong>Recurring questions</strong> identify where signage is failing. If the same
@@ -795,10 +802,10 @@ rule set. Every answer states how well confirmed it is.</p>
   from the patterns.</p>
 
   <div class="flag">
-    <strong>Facilities has not adopted this tool.</strong> No part of this project has been
-    presented to or endorsed by SOM Facilities or Yale Recycling. The feedback loop
-    described above is a plan I intend to pursue in my role, not an arrangement that
-    exists.
+    <strong>Facilities has not seen this tool yet.</strong> No part of this project has been
+    presented to or endorsed by SOM Facilities or Yale Recycling. I intend to bring it to
+    our first biweekly meeting after fall break. The feedback loop described above is a
+    plan I will pursue in my role, not an arrangement that exists.
   </div>
 
   <h3>What would make this measurable</h3>
@@ -862,19 +869,32 @@ rule set. Every answer states how well confirmed it is.</p>
 
   <h3>Next steps, in order</h3>
 
+  <h4 style="margin-top:4px">Committed</h4>
   <ol>
-    <li><strong>Confirm Evans Hall waste collection with SOM Facilities.</strong> This is
-      the highest-value action available and requires no code. It would promote three
-      unverified rules and resolve the dashboard's top opportunity.</li>
-    <li><strong>Run a structured student evaluation</strong> using the existing
-      <code>/eval</code> cohort mechanism, so the first real usage data is cleanly
-      separated from development testing.</li>
-    <li><strong>Take the dashboard to a Facilities meeting</strong> and test whether the
-      opportunities it surfaces are actually actionable for them — the real test of
-      Section 7's premise.</li>
-    <li><strong>Deploy publicly</strong> if and when a pilot justifies it. The app is
-      deployment-ready: audited, HTTPS-enforcing for admin, and configured for a persistent
-      volume. Hosting is approximately $7/month, deliberately deferred.</li>
+    <li><strong>Bring WasteWise to the first biweekly Facilities meeting after fall
+      break.</strong> I already meet with the SOM Facilities team on that cadence as 1Y
+      Sustainability Chair. The agenda is to demonstrate the prototype and talk through
+      the sorting problems the dashboard has surfaced.</li>
+    <li><strong>Confirm what Evans Hall actually collects.</strong> The highest-value
+      action available, and it requires no code. A written answer would promote three
+      unverified rules and resolve the dashboard's top open question.</li>
+    <li><strong>Identify signage and guidance opportunities</strong> from the same
+      conversation — the dashboard already names candidates, such as signposting the
+      deciding detail for batteries.</li>
+  </ol>
+
+  <h4>Proposed, and contingent on that conversation</h4>
+  <ol start="4">
+    <li><strong>Explore school funding for low-cost public hosting.</strong> If Facilities
+      is receptive, I would ask whether SOM would fund hosting. I have researched the
+      options and approximate costs — roughly $7/month for a managed host with a
+      persistent volume. <strong>No funding has been requested, offered or granted</strong>,
+      and nothing is deployed.</li>
+    <li><strong>Run a small QR-code pilot</strong> at a few Evans Hall stations, with
+      sessions tagged through the existing <code>/eval</code> cohort so the first real
+      usage data stays cleanly separated from my development testing.</li>
+    <li><strong>Feed what students ask back into Facilities conversations</strong>, which
+      is the premise of Section 7 and the only way to test whether it holds.</li>
     <li><strong>Expand the knowledge base</strong> as questions reveal gaps, keeping the
       same rule: no rule enters as <code>verified</code> without a citation.</li>
   </ol>
