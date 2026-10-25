@@ -39,6 +39,35 @@ function phraseInText(phrase, text) {
   return new RegExp(`(?<![a-z0-9])${escapeRe(phrase)}(?![a-z0-9])`, 'i').test(text);
 }
 
+/*
+ * Words that name a container or its packaging, rather than its contents.
+ */
+const CONTAINER_NOUN =
+  'container|box|bowl|tray|clamshell|cup|carton|tub|jar|bottle|wrapper|wrapping|' +
+  'packaging|package|bag|sleeve|lid|plate|cutlery|utensil';
+
+/**
+ * True when a food word is describing what a container *held*, not the object
+ * being thrown away. "A clear plastic clamshell container from a salad" is a
+ * container question: "salad" names the former contents, and matching the food
+ * rule on it put a piece of plastic in front of a food-scraps bin.
+ *
+ * Only the two attributive shapes count — "<food> container" and
+ * "<container> from/of/for a <food>". "Half-eaten sandwich in a container" is
+ * neither, so genuine food in packaging still reaches the food rule.
+ *
+ * Applied only to food_waste rules. In "compostable plate" the same shape
+ * appears, but "compostable" describes the plate's material rather than its
+ * contents, and that rule is foodservice — so it is untouched.
+ */
+function describesContainerContents(alias, text) {
+  const a = escapeRe(alias);
+  const after = new RegExp(`(?<![a-z0-9])${a}\\s+(?:${CONTAINER_NOUN})(?![a-z0-9])`, 'i');
+  const before = new RegExp(
+    `(?:${CONTAINER_NOUN})\\s+(?:from|of|for)\\s+(?:a|an|the)?\\s*${a}(?![a-z0-9])`, 'i');
+  return after.test(text) || before.test(text);
+}
+
 function tokenize(text) {
   return text
     .toLowerCase()
@@ -71,6 +100,16 @@ export function retrieveScored(query, limit = 4) {
     for (const alias of rule.aliases) {
       const a = alias.toLowerCase();
       if (phraseInText(a, lower)) {
+        // A contents word attached to a container names what the container held,
+        // not the object being thrown away. An alias that itself names a
+        // container ("pizza box", "tea bag", "snack wrapper") is exempt, so
+        // those rules keep their own phrase matches.
+        const aliasNamesContainer =
+          new RegExp(`(?:^|\\s)(?:${CONTAINER_NOUN})(?:\\s|$)`, 'i').test(a);
+        if (rule.category === 'food_waste' && !aliasNamesContainer
+            && describesContainerContents(a, lower)) {
+          continue;
+        }
         if (GENERIC_MATERIAL.has(a)) {
           score += 2;
         } else {

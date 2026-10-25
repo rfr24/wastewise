@@ -864,6 +864,61 @@
         "tip": "Empty, rinse, lid off",
         "detail": "Glass bottles and jars of any colour are accepted. Separate a metal cap from the jar — mixed-material items have to be split up. Not accepted: light bulbs, mirrors, ceramics, Pyrex or window glass."
       }
+    },
+    {
+      "id": "rigid-plastic-container",
+      "item": "Rigid plastic takeout container, clamshell or tub",
+      "aliases": [
+        "clamshell",
+        "clam shell",
+        "takeout container",
+        "take-out container",
+        "take out container",
+        "takeaway container",
+        "salad container",
+        "deli container",
+        "food container",
+        "plastic container",
+        "rigid plastic container",
+        "plastic tub",
+        "deli tub",
+        "takeout box",
+        "plastic takeout box",
+        "rigid plastic"
+      ],
+      "category": "containers",
+      "stream": "recycling",
+      "conditional": true,
+      "verification_status": "verified",
+      "guidance": "ANSWER BOTH BRANCHES IN ONE SENTENCE — do not ask a question for this item. Say: recycle it if it is stamped #1, #2 or #5 and has been emptied and wiped out; otherwise, including when there is no number at all, it goes in the trash. The student can read the number themselves in two seconds, so handing them both halves is strictly more useful than asking. Basis: Yale single-stream accepts plastics #1, #2 and #5 and requires items be empty and clean, and RecycleCT — the statewide list Yale's own FAQ directs people to for items Yale does not name — lists 'Plastic containers, tubs & lids' as accepted. A container still greasy or full of dressing is a contaminant and goes in the trash whatever its number, so the resin number alone does not settle it. Do NOT ask which waste station or part of the building they are in; location does not change this answer. Yale does not name clamshells specifically, so do not claim it lists this exact item.",
+      "disqualifiers": [
+        "plastic bag",
+        "film",
+        "plastic film",
+        "cling film",
+        "wrapper",
+        "shrink wrap",
+        "bubble wrap",
+        "flexible plastic",
+        "soft plastic",
+        "pouch",
+        "sachet",
+        "compostable",
+        "bioplastic",
+        "pla"
+      ],
+      "source": {
+        "citation": "Yale Recycling, 'Single-Stream Recycling' — accepts Plastic #1, #2 and #5; 'Items must be clean and empty of any liquids or food.' RecycleCT, 'In the Bin' — 'Plastic containers, tubs & lids' listed under WHAT'S IN; Yale's Recycling FAQ directs to RecycleCT for items Yale does not name.",
+        "url": "https://recycling.yale.edu/recycling-on-campus/single-stream-recycling",
+        "type": "yale_official"
+      },
+      "guide": {
+        "show": true,
+        "icon": "🥡",
+        "destination": "recycling",
+        "tip": "#1, #2 or #5 — and wiped out",
+        "detail": "Yale accepts plastics by resin number. A rigid takeout container, clamshell or tub marked #1, #2 or #5 is recyclable once it is empty and wiped clean. Unmarked or another number means trash, and so does one still greasy or full of dressing."
+      }
     }
   ]
 }

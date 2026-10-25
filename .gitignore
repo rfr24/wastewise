@@ -40,3 +40,7 @@ tmp/
 
 # Design reference artwork, kept locally. The app's own asset is public/logo.png.
 Eco Chat Recycling Icon*.png
+
+# Raw screenshot captures. They are embedded as base64 inside report.html and
+# slides.html, so the deliverables stay self-contained without the originals.
+WasteWise Screenshots/

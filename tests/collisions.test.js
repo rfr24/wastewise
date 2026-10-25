@@ -109,3 +109,79 @@ test('hazardous and unverified items still never fast-path', () => {
     assert.equal(tryFastPath(q), null, `${q} must go to the model`);
   }
 });
+
+/* ---------- a food word describing a container's former contents ---------- */
+
+test('a salad clamshell is not matched as food scraps', () => {
+  // The exact prompt from the bug report. "salad" names what the container
+  // held; the object being thrown away is a piece of rigid plastic.
+  const q = 'I have a clear plastic clamshell container from a salad, '
+    + 'is that recyclable in Evans Hall?';
+  const ids = retrieveRules(q).map((r) => r.id);
+  assert.ok(!ids.includes('food-scraps'),
+    `food-scraps must not match a container question, got: ${ids.join(', ')}`);
+  // It reaches the rigid-container rule instead, which is what actually covers it.
+  assert.ok(ids.includes('rigid-plastic-container'),
+    `expected the rigid-container rule, got: ${ids.join(', ')}`);
+  // The stream is conditional on the resin number, so it must never shortcut to
+  // a flat "recycling" via the zero-token fast path.
+  const fast = tryFastPath(q);
+  assert.ok(!fast || fast.recommendation === 'unknown',
+    'a conditional container must not take the fast path to a bin');
+});
+
+/* ---------- the rigid container answers both branches ---------- */
+
+test('a rigid plastic container is answered conditionally, not with a question', () => {
+  const rule = ruleById('rigid-plastic-container');
+  assert.equal(rule.verification_status, 'verified');
+  assert.equal(rule.stream, 'recycling');
+  // Conditional keeps it out of the fast path, so the conditions are always stated.
+  assert.equal(rule.conditional, true);
+  // Both branches must be present in the guidance the model is handed.
+  assert.match(rule.guidance, /#1, #2 (and|or) #5/);
+  assert.match(rule.guidance, /trash/i);
+  assert.match(rule.guidance, /do not ask a question/i);
+  // The resin number alone must not be presented as sufficient.
+  assert.match(rule.guidance, /greasy|contaminant/i);
+  // Cites a real Yale source.
+  assert.match(rule.source.url, /^https:\/\/recycling\.yale\.edu\//);
+});
+
+test('the film rule and the rigid rule stay on opposite sides', () => {
+  // Flexible packaging must never reach the rigid rule, and vice versa.
+  for (const q of ['empty snack wrapper', 'plastic bag', 'cling film']) {
+    assert.ok(!retrieveRules(q).map((r) => r.id).includes('rigid-plastic-container'),
+      `"${q}" is film, not a rigid container`);
+  }
+  for (const q of ['plastic clamshell', 'deli container', 'plastic tub']) {
+    assert.ok(!retrieveRules(q).map((r) => r.id).includes('plastic-film-bags'),
+      `"${q}" is rigid, not film`);
+  }
+});
+
+test('the same shape is caught for other containers and foods', () => {
+  for (const q of ['where does a salad container go?', 'empty sandwich box',
+                   'a tray from a burrito', 'pizza crust box']) {
+    assert.ok(!retrieveRules(q).map((r) => r.id).includes('food-scraps'),
+      `food-scraps should not match "${q}"`);
+  }
+});
+
+test('actual food scraps still reach the food rule', () => {
+  // The contrasting cases: real food, including food still sitting in packaging.
+  for (const q of ['I have leftover salad to throw away', 'where does a banana peel go?',
+                   'half-eaten sandwich in a plastic container', 'apple core',
+                   'leftover rice and chicken', 'used tea bag']) {
+    assert.ok(retrieveRules(q).map((r) => r.id).includes('food-scraps'),
+      `food-scraps should match "${q}"`);
+  }
+});
+
+test('container rules keep their own matches', () => {
+  // These share the attributive shape but name the container themselves.
+  assert.equal(top('greasy pizza box'), 'pizza-box');
+  assert.equal(top('empty snack wrapper'), 'plastic-film-bags');
+  // An adjective before a container noun is not a contents word.
+  assert.equal(retrieveRules('compostable plate')[0].id, 'compostable-serviceware');
+});

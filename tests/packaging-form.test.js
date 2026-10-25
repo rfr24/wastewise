@@ -105,7 +105,11 @@ test('a rigid container is not answered from the film rule', () => {
   });
   assert.ok(!r.rules.includes('plastic-film-bags'), 'the film rule must not apply to rigid plastic');
   assert.match(r.query, /rigid container/);
-  assert.equal(r.out.recommendation, 'unknown');
+  // A rigid container now has its own verified rule, so the outcome is no longer
+  // "unknown" by absence. What must stay true is that the answer comes from the
+  // rigid rule and never from the film rule.
+  assert.ok(r.rules.includes('rigid-plastic-container'),
+    `rigid plastic should be covered by its own rule, got: ${r.rules.join(', ')}`);
 });
 
 test('an unknown form still asks rather than guessing', () => {
