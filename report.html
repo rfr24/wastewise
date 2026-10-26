@@ -199,8 +199,9 @@ rule set. Every answer states how well confirmed it is.</p>
   </figure>
 
   <div class="flag">
-    <strong>What this project does not claim.</strong> WasteWise has not been tested with
-    students, and it does not measure contamination rates, diversion rates, or behaviour
+    <strong>What this project does not claim.</strong> Friends have tried WasteWise
+    informally, but it has had no structured testing with students and no formal
+    evaluation, and it does not measure contamination rates, diversion rates, or behaviour
     change. The conversations above are qualitative motivation for building it, not
     evidence that it works. Section 7 is explicit about what evidence exists and what
     does not.
@@ -240,12 +241,14 @@ rule set. Every answer states how well confirmed it is.</p>
           <a href="https://uwaterloo.ca/sustainability/sort">Waterloo Shift:Zero</a>,
           CWRU's QR-code bin signs)</td>
         <td>Campus-specific searchable sorting guides, some reached by QR codes at bins.</td>
-        <td>Closest comparison, and good practice. They are lookup tools: they answer the
-          item you can name, and have no view of what students ask.</td></tr>
+        <td>Closest comparison, and good practice. They work as lookup tools — you ask
+          about an item you can name — and the published versions surface no view of what
+          students are collectively asking.</td></tr>
       <tr><td>General-purpose ChatGPT</td>
         <td>Will answer any sorting question immediately, including from a photo.</td>
-        <td>Answers from general knowledge with uniform confidence. It cannot know Evans
-          Hall's signage, and will not tell you when it does not know.</td></tr>
+        <td>Answers from general knowledge, typically with an even tone whether or not
+          the ground is firm. It has no access to Evans Hall's signage, and nothing ties
+          its confidence to a citable local source.</td></tr>
     </tbody>
   </table>
 
@@ -425,7 +428,7 @@ rule set. Every answer states how well confirmed it is.</p>
       the actual verification status of the rules it cited, and downgrades it if
       overstated. Hazard screening runs independently. Unsupported "otherwise put it in
       the trash" fallbacks are stripped.</p></li>
-    <li><h4>The app declines to name a bin</h4>
+    <li><h4>The app gives a conditional recycling recommendation</h4>
       <p>The recorded outcome is <code>recommendation: recycling</code>,
       <code>confidence: confirmed</code>, with <strong>no follow-up question</strong>:</p>
       <p style="margin:0 0 9px"><em>"Recycle it if it's stamped #1, #2, or #5 and is empty
@@ -451,7 +454,10 @@ rule set. Every answer states how well confirmed it is.</p>
     <li><h4>Answer and log</h4>
       <p>The student sees one short instruction, a confidence label, and an expandable
       "Rules used" list with the Yale citations. The row is logged with tokens, outcome,
-      latency and cohort — never the photo, never an identifier.</p></li>
+      latency and cohort. No account, user id, session id or IP address is attached to the
+      row, and the photo is never written anywhere. The cohort is a group label, not a
+      per-person identifier. The question text is the one caveat: it is stored verbatim and
+      is free-form.</p></li>
   </ol>
 
 <figure class="shot">
@@ -706,12 +712,12 @@ rule set. Every answer states how well confirmed it is.</p>
     <strong>Stating the evidence plainly.</strong> WasteWise has not yet been used by
     students and has not been formally evaluated. Friends have tried it informally and
     given feedback that shaped the wording and the photo flow, but that is not a study:
-    there were no tasks, no measurements, and no record of who used it. Every recorded
-    question but one is my own development testing, in a cohort the system labels
-    <code>development</code>. There is no measured change in sorting behaviour,
-    contamination, or diversion, and this report does not claim one.
-    What follows is the qualitative basis for the project and the mechanism by which it
-    could produce value — not a measured result.
+    there were no tasks, no measurements, and no record of who used it — informal use
+    lands in the same <code>development</code> cohort as my own testing and is not
+    separable from it afterwards. The recorded questions are development traffic, almost
+    all of it mine. No change in sorting behaviour, contamination or diversion has been
+    measured, and this report claims none. What follows is the mechanism by which the
+    project could produce value — not a measured result.
   </div>
 
   <h3>What is demonstrated, and what is potential</h3>
@@ -748,16 +754,9 @@ rule set. Every answer states how well confirmed it is.</p>
     </tbody>
   </table>
 
-  <h3>Qualitative basis</h3>
-
-  <p>The motivation in Section 2 comes from informal conversations with SOM classmates in
-  my capacity as 1Y Sustainability Chair. Their substance — paraphrased, not quoted — was
-  consistent: paper coffee cups are widely assumed recyclable; a "compostable" label is
-  read as naming a bin, when Yale in fact directs compostable serviceware to the trash and
-  what Evans Hall collects is unconfirmed; and several people believed that recycling an
-  uncertain item is the safer guess, when the wrong item can contaminate a load. These are
-  observations about confusion, which is precisely what WasteWise is built to answer and
-  to measure.</p>
+  <p>The three confusions set out in Section 2 — paraphrased from informal conversations,
+  never quoted — are the qualitative basis for all of this. They are observations about
+  confusion, which is precisely what WasteWise is built to answer and to record.</p>
 
   <h3>The mechanism: a feedback loop into Facilities conversations</h3>
 
@@ -842,9 +841,11 @@ rule set. Every answer states how well confirmed it is.</p>
   <table>
     <thead><tr><th>Limit</th><th>Detail</th></tr></thead>
     <tbody>
-      <tr><td><strong>No student testing yet</strong></td>
-        <td>Every recorded question but one is development testing by one person over
-          nine days of building. Nothing here measures student behaviour.</td></tr>
+      <tr><td><strong>No structured student testing yet</strong></td>
+        <td>Friends have used it informally and given feedback, but with no tasks, no
+          measurements and no record of who used it. The recorded questions are
+          development traffic from nine days of building, almost all of it mine. Nothing
+          here measures student behaviour.</td></tr>
       <tr><td><strong>Evans Hall compost is unconfirmed</strong></td>
         <td>Yale states it lacks capacity for compost service in non-dining spaces but does
           not name Evans Hall. Three rules remain <code>unverified</code> pending
@@ -856,7 +857,7 @@ rule set. Every answer states how well confirmed it is.</p>
           conflict rather than resolving it.</td></tr>
       <tr><td><strong>Response time is slow for model-answered questions</strong></td>
         <td>Measured 10.7 s and 9.1 s on the two traced runs, driven largely by reasoning
-          tokens. Fast-path answers returned in 0–6 ms across the six that carry a
+          tokens. Fast-path answers returned in 0–6 ms across the seven that carry a
           recorded measurement. All of these are small samples describing specific runs,
           not a general performance claim. Latency is only recorded from the
           release that added the field, so dashboard coverage is partial and says so.</td></tr>
@@ -909,12 +910,28 @@ rule set. Every answer states how well confirmed it is.</p>
       same rule: no rule enters as <code>verified</code> without a citation.</li>
   </ol>
 
+  <h3>In closing</h3>
+
+  <p>WasteWise exists because a student at a bin has thirty seconds and no reliable way to
+  check. The technical contribution is not that a model can answer the question — it is the
+  architecture that stops it answering beyond what can be cited: retrieval over a curated,
+  source-verified rule set, a deterministic guardrail that outranks the model, and a
+  verification status attached to every answer. That design is what let the app say "I
+  can't confirm this" instead of guessing, and what turned one unanswered question into a
+  sourced rule during this project's own development.</p>
+
+  <p>What it does not yet have is students. The next step is the one that needs no code:
+  taking the dashboard to my first biweekly Facilities meeting after fall break and
+  confirming what Evans Hall actually collects.</p>
+
   <p class="footnote">
     WasteWise is built with Node 24 and Express, SQLite via the built-in
     <code>node:sqlite</code> module, and no frontend build step. The repository is public at
     <a href="https://github.com/rfr24/wastewise">github.com/rfr24/wastewise</a> and runs
-    from a fresh clone in under ten seconds following the README. All figures in this
-    report were measured on 16 October 2026 and can be reproduced from the repository.
+    from a fresh clone in under ten seconds following the README. The token, cost and
+    latency measurements were taken on 16 October 2026; the dashboard screenshots and the
+    traced run shown here are from 25 October 2026, after the sorting fixes described in
+    Section 4. All of them can be reproduced from the repository.
   </p>
 </section>
 
