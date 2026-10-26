@@ -67,6 +67,7 @@
   .cover-row img{width:160px; height:160px; flex:none}
   .cover-by{font-size:.56em; color:#c9ded4; line-height:1.6; margin-top:30px}
   .cover-by b{color:#fff}
+  .cover-note{font-size:.42em; color:#a9c7ba; margin:12px 0 0; line-height:1.5}
   .reveal .repo{display:inline-flex; align-items:center; gap:14px; margin-top:22px;
     background:rgba(255,255,255,.08); border:2px solid var(--mint); border-radius:11px;
     padding:11px 18px}
@@ -98,10 +99,12 @@
   </div>
   <p class="cover-by"><b>Rachel Rosenberg</b><br />MGT 409: AI Foundations · October 2026</p>
   <p class="repo">
-    <span class="repo-k">Repository</span>
+    <span class="repo-k">Source code &amp; setup</span>
     <a class="repo-url" href="https://github.com/rfr24/wastewise"
        target="_blank" rel="noopener">https://github.com/rfr24/wastewise</a>
   </p>
+  <p class="cover-note">Not publicly deployed — clone the repository and follow the
+    README to run the working app locally.</p>
 </section>
 
 <!-- 2 · THE PROBLEM -->
@@ -157,10 +160,11 @@
       <td>An instant answer to any question, from text or a photo.</td>
       <td>Answers from general knowledge with uniform confidence, and cannot know Evans Hall.</td></tr>
     <tr class="ww"><td><strong>WasteWise</strong></td>
-      <td>Answers at the bin, from text or a photo, grounded in <strong>24 cited local
-        rules</strong> — plus an <strong>operations dashboard</strong> that turns what
-        students ask into signage and guidance opportunities for the people who maintain
-        the building.</td>
+      <td>Answers at the bin, from text or a photo, grounded in <strong>24 curated
+        rules</strong> — each labelled verified, observational or unverified, so the
+        answer carries its own confidence — plus an <strong>operations dashboard</strong>
+        that turns what students ask into signage and guidance opportunities for the
+        people who maintain the building.</td>
       <td>Nothing it can't cite. Clearly communicates uncertainty when local guidance is
         unavailable.</td></tr>
   </table>
@@ -301,7 +305,7 @@
   <div class="two wide-left" style="align-items:start">
     <div>
       <p style="font-size:.56em"><strong>Demonstrated.</strong> The app works end to end:
-        24 cited rules, text and photo sorting, guardrails that hold, and a dashboard that
+        24 curated rules, text and photo sorting, guardrails that hold, and a dashboard that
         turns questions into concrete opportunities. Friends have tried it informally and
         given feedback that shaped the wording and the photo flow.</p>
       <p style="font-size:.56em"><strong>Potential, not yet measured.</strong> Yale SOM
@@ -348,7 +352,7 @@
     </div>
   </div>
   <div class="kpis">
-    <div class="kpi"><span class="v">24</span><span class="k">cited rules</span></div>
+    <div class="kpi"><span class="v">24</span><span class="k">curated rules</span></div>
     <div class="kpi"><span class="v">335</span><span class="k">tests passing</span></div>
     <div class="kpi"><span class="v">$0.00045</span><span class="k">per question</span></div>
     <div class="kpi"><span class="v">7s</span><span class="k">clone to running</span></div>

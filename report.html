@@ -75,7 +75,7 @@
   .sub{font-size:1.08rem; color:var(--muted); margin:7px 0 13px}
   .byline{font-family:-apple-system,sans-serif; font-size:.9rem; color:var(--ink)}
   .byline strong{color:var(--green-deep)}
-  .linkrow{font-family:ui-monospace,Menlo,monospace; font-size:.83rem; margin-top:9px}
+  .linkrow{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif; font-size:.82rem; line-height:1.5; margin-top:9px; color:var(--ink)}
   .repo{display:flex; align-items:center; gap:13px; margin:15px 0 9px;
     background:var(--green-soft); border:2px solid var(--green); border-radius:9px;
     padding:11px 15px; flex-wrap:wrap}
@@ -133,12 +133,18 @@
     MGT 409: AI Foundations · Final Project · October 2026
   </p>
   <p class="repo">
-    <span class="repo-k">Repository</span>
+    <span class="repo-k">Source code &amp; setup</span>
     <a class="repo-url" href="https://github.com/rfr24/wastewise">https://github.com/rfr24/wastewise</a>
   </p>
   <p class="linkrow">
-    Live app: not deployed — runs locally from a fresh clone in under ten seconds
-    (see <code>README.md</code>)
+    <strong>How to run it:</strong> WasteWise is <strong>not publicly deployed</strong>, so
+    there is no live URL. The working application runs locally — clone the repository above
+    and follow the <code>README.md</code>:
+    <code>git clone</code> → <code>npm ci</code> → <code>npm start</code> →
+    <code>http://localhost:3000</code>. A fresh clone reached a working answer in
+    <strong>seven seconds</strong> on a clean machine. <code>npm test</code> runs the full
+    suite offline and needs no API key. The README also gives the one line needed to open
+    the operations dashboard at <code>/admin</code>.
   </p>
 </header>
 

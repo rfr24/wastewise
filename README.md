@@ -54,7 +54,7 @@ npm start                # http://localhost:3000
 
 `PORTKEY_API_KEY` is read from your `.env` one folder above the repo, so if the clone sits
 inside your course folder there is nothing to configure — the student assistant works
-immediately. `npm test` runs 329 offline tests and needs no key at all.
+immediately. `npm test` runs 335 offline tests and needs no key at all.
 
 **To open the operations dashboard**, add one line to that same `.env` and restart:
 
@@ -202,7 +202,7 @@ All of them accept `range` (`7d` / `30d` / `all`) and `cohort` (see below).
 | `observational` | Based on photographed Evans Hall signage or bin layout | Must present as an *observation* of what is posted — not a confirmed processing requirement |
 | `unverified` | Drafted from general practice or an unconfirmed claim | Must express uncertainty; must not present as Yale guidance |
 
-**Current status: 23 rules — 16 `verified`, 4 `observational`, 3 `unverified`.**
+**Current status: 24 rules — 17 `verified`, 4 `observational`, 3 `unverified`.**
 
 The verified rules cite published Yale pages that state the requirement directly:
 
@@ -392,7 +392,7 @@ but the text is stored verbatim for the confusion analysis the dashboard is buil
 ## Testing
 
 ```bash
-npm test          # 329 tests across 16 files, no network calls
+npm test          # 335 tests across 16 files, no network calls
 ```
 
 The suite is offline and deterministic: no test calls the model API. Model behaviour is
@@ -402,7 +402,7 @@ assignment, and the rendered markup of both frontends.
 
 Two tests depend on private photographs taken on a personal phone. Those files are not
 published with the repository, and the tests **skip cleanly** when they are absent, so a
-fresh clone reports 328 passing and 1 skipped with no failures.
+fresh clone reports 334 passing and 1 skipped with no failures.
 
 The dataset is guarded by tests too: every rule needs an id, guidance, aliases, a citation
 and a valid verification status; every `verified` rule must cite a real `*.yale.edu` URL;
